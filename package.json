@@ -1,0 +1,30 @@
+{
+  "name": "saqr",
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "eslint .",
+    "typecheck": "turbo typecheck",
+    "format": "prettier --write .",
+    "db:generate": "pnpm --filter @saqr/core-api db:generate",
+    "db:migrate": "pnpm --filter @saqr/core-api db:migrate",
+    "db:seed": "pnpm --filter @saqr/core-api db:seed",
+    "test": "pnpm --filter @saqr/core-api test"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0",
+    "typescript": "^5.9.0",
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "@eslint/js": "^9.0.0",
+    "prettier": "^3.6.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}

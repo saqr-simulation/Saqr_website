@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+  SUPER_ADMIN
+}
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+enum LessonType {
+  TEXT
+  VIDEO
+  RESOURCE
+}
+enum QuestionType {
+  SINGLE_CHOICE
+}
+enum DocumentStatus {
+  UPLOADED
+  PROCESSING
+  READY
+  FAILED
+}
+
+model User {
+  id           String @id @db.Uuid
+  email        String @unique
+  name         String?
+  role         Role @default(STUDENT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  enrollments  Enrollment[]
+  attempts     QuizAttempt[]
+  certificates Certificate[]
+  documents    Document[]
+}
+
+model Course {
+  id           String @id @default(cuid())
+  slug         String @unique
+  title        String
+  description  String
+  status       CourseStatus @default(DRAFT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  modules      Module[]
+  enrollments  Enrollment[]
+  certificates Certificate[]
+  documents    Document[]
+}
+
+model Module {
+  id       String @id @default(cuid())
+  courseId String
+  title    String
+  position Int
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons  Lesson[]
+  quiz     Quiz?
+  @@unique([courseId, position])
+}
+
+model Lesson {
+  id       String @id @default(cuid())
+  moduleId String
+  title    String
+  position Int
+  type     LessonType @default(TEXT)
+  content  String?
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  progress LessonProgress[]
+  @@unique([moduleId, position])
+}
+
+model Enrollment {
+  id         String @id @default(cuid())
+  userId     String @db.Uuid
+  courseId   String
+  enrolledAt DateTime @default(now())
+  completedAt DateTime?
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course     Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  progress   LessonProgress[]
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model LessonProgress {
+  id           String @id @default(cuid())
+  enrollmentId String
+  lessonId     String
+  completedAt  DateTime?
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  lesson       Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  @@unique([enrollmentId, lessonId])
+  @@index([lessonId])
+}
+
+model Quiz {
+  id        String @id @default(cuid())
+  moduleId  String @unique
+  title     String
+  passScore Int @default(70)
+  module    Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  questions Question[]
+  attempts  QuizAttempt[]
+}
+
+model Question {
+  id          String @id @default(cuid())
+  quizId      String
+  prompt      String
+  type        QuestionType @default(SINGLE_CHOICE)
+  options     Json
+  answerIndex Int
+  position    Int
+  quiz        Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  @@unique([quizId, position])
+}
+
+model QuizAttempt {
+  id          String @id @default(cuid())
+  userId      String @db.Uuid
+  quizId      String
+  score       Int?
+  answers     Json
+  startedAt   DateTime @default(now())
+  submittedAt DateTime?
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz        Quiz @relation(fields: [quizId], references: [id], onDelete: Restrict)
+  @@index([userId, quizId])
+}
+
+model Certificate {
+  id       String @id @default(cuid())
+  userId   String @db.Uuid
+  courseId String
+  issuedAt DateTime @default(now())
+  revokedAt DateTime?
+  user     User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model Document {
+  id         String @id @default(cuid())
+  courseId   String
+  uploaderId String @db.Uuid
+  title      String
+  bucket     String @default("course-resources")
+  objectPath String @unique
+  mimeType   String
+  status     DocumentStatus @default(UPLOADED)
+  createdAt  DateTime @default(now())
+  course     Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  uploader   User @relation(fields: [uploaderId], references: [id], onDelete: Restrict)
+  @@index([courseId])
+  @@index([uploaderId])
+}
