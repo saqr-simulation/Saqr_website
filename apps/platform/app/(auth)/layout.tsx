@@ -6,7 +6,7 @@ export default function AuthLayout({
 }) {
   return (
     <main className="auth-shell">
-      <section className="auth-story">
+      <section className="auth-story dark-surface">
         <a
           href={process.env.NEXT_PUBLIC_WEB_URL || 'http://localhost:3000'}
           aria-label="SAQR home"

@@ -20,46 +20,48 @@ const features = [
 export default function Home() {
   return (
     <>
-      <section className="hero container">
-        <div>
-          <p className="eyebrow">THE NEXT GENERATION OF DRONE PILOTS</p>
-          <h1>
-            Train for the future of <em>professional drone operations.</em>
-          </h1>
-          <p className="hero-description muted">
-            SAQR trains the next generation of professional drone pilots,
-            starting with agriculture.
-          </p>
-          <div className="hero-actions">
-            <Button asChild>
-              <a href={platformUrl()}>
-                Start Training <span aria-hidden="true">↗</span>
-              </a>
-            </Button>
-            <Button asChild variant="secondary">
-              <a href="/about">
-                Discover SAQR <span aria-hidden="true">→</span>
-              </a>
-            </Button>
-          </div>
-          <p className="hero-footnote">
-            <span className="status-dot" /> AGRICULTURE FIRST. BUILT FOR WHAT’S
-            NEXT.
-          </p>
-        </div>
-        <div className="hero-art">
-          <FieldVisual />
-          <div className="hero-art-caption">
-            <div>
-              <strong>A different view of agriculture.</strong>
-              <p className="muted">The first SAQR specialization</p>
+      <div className="hero-band dark-surface">
+        <section className="hero container">
+          <div>
+            <p className="eyebrow">THE NEXT GENERATION OF DRONE PILOTS</p>
+            <h1>
+              Train for the future of <em>professional drone operations.</em>
+            </h1>
+            <p className="hero-description muted">
+              SAQR trains the next generation of professional drone pilots,
+              starting with agriculture.
+            </p>
+            <div className="hero-actions">
+              <Button asChild>
+                <a href={platformUrl()}>
+                  Start Training <span aria-hidden="true">↗</span>
+                </a>
+              </Button>
+              <Button asChild variant="secondary">
+                <a href="/about">
+                  Discover SAQR <span aria-hidden="true">→</span>
+                </a>
+              </Button>
             </div>
-            <span className="text-saqr text-2xl" aria-hidden="true">
-              ↗
-            </span>
+            <p className="hero-footnote">
+              <span className="status-dot" /> AGRICULTURE FIRST. BUILT FOR
+              WHAT’S NEXT.
+            </p>
           </div>
-        </div>
-      </section>
+          <div className="hero-art">
+            <FieldVisual />
+            <div className="hero-art-caption">
+              <div>
+                <strong>A different view of agriculture.</strong>
+                <p className="muted">The first SAQR specialization</p>
+              </div>
+              <span className="text-saqr text-2xl" aria-hidden="true">
+                ↗
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
       <div className="container strip">
         <span>
           BUILT AROUND <strong>REAL-WORLD PURPOSE</strong>
@@ -171,7 +173,7 @@ export default function Home() {
             <a href={platformUrl()}>Explore the platform ↗</a>
           </Button>
         </div>
-        <div className="preview">
+        <div className="preview dark-surface">
           <div className="flex justify-between items-center mb-7">
             <span className="text-sm">SAQR / PILOT OVERVIEW</span>
             <Badge>DEMO PREVIEW</Badge>
@@ -233,7 +235,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="section cta-band">
+      <section className="section cta-band dark-surface">
         <div className="container">
           <p className="eyebrow">YOUR FUTURE TAKES FLIGHT HERE</p>
           <h2>

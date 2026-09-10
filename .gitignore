@@ -9,3 +9,4 @@ __pycache__/
 .venv/
 *.tsbuildinfo
 .local-tools/
+tmp/

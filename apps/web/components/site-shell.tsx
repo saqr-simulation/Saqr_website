@@ -25,38 +25,42 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <header className="site-header container">
-        <a href="/" aria-label="SAQR home">
-          <Logo />
-        </a>
-        <Links />
-        <div className="header-actions">
-          <a className="login-link" href={platformUrl('/login')}>
-            Login
+      <div className="site-header-band dark-surface">
+        <header className="site-header container">
+          <a href="/" aria-label="SAQR home">
+            <Logo />
           </a>
-          <Button asChild>
-            <a href={platformUrl()}>
-              Start Training <span aria-hidden="true">↗</span>
+          <Links />
+          <div className="header-actions">
+            <a className="login-link" href={platformUrl('/login')}>
+              Login
             </a>
-          </Button>
-          <details className="mobile-menu">
-            <summary>Menu</summary>
-            <Links />
-          </details>
-        </div>
-      </header>
+            <Button asChild>
+              <a href={platformUrl()}>
+                Start Training <span aria-hidden="true">↗</span>
+              </a>
+            </Button>
+            <details className="mobile-menu">
+              <summary>Menu</summary>
+              <Links />
+            </details>
+          </div>
+        </header>
+      </div>
       <main id="main">{children}</main>
-      <footer className="site-footer container">
-        <a href="/" aria-label="SAQR home">
-          <Logo />
-        </a>
-        <span>New perspectives. Grounded in purpose.</span>
-        <div className="flex gap-5">
-          <a href="/contact">Contact & partnerships</a>
-          <a href={platformUrl('/login')}>Pilot login ↗</a>
-        </div>
-        <span>© {new Date().getFullYear()} SAQR</span>
-      </footer>
+      <div className="footer-band dark-surface">
+        <footer className="site-footer container">
+          <a href="/" aria-label="SAQR home">
+            <Logo />
+          </a>
+          <span>New perspectives. Grounded in purpose.</span>
+          <div className="flex gap-5">
+            <a href="/contact">Contact & partnerships</a>
+            <a href={platformUrl('/login')}>Pilot login ↗</a>
+          </div>
+          <span>© {new Date().getFullYear()} SAQR</span>
+        </footer>
+      </div>
     </>
   );
 }

@@ -51,7 +51,7 @@ export default async function Dashboard() {
           <h2 className="small-title">Continue training</h2>
           <Card className="continue-card">
             <div>
-              <Badge>AGRICULTURE · DEMO</Badge>
+              <Badge variant="agriculture">AGRICULTURE · DEMO</Badge>
               <h3>{demoCourse.title}</h3>
               <p className="muted text-sm">Module 2 / Drone Systems & Safety</p>
               <div className="flex justify-between text-xs muted">

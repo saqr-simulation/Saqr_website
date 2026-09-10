@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 export const metadata: Metadata = {
+  icons: { icon: '/saqr-mark.svg' },
   title: { default: 'SAQR | Pilot platform', template: '%s | SAQR' },
   description:
     'Train for the future of professional drone operations. Agriculture first.',
