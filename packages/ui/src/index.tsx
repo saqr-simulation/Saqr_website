@@ -101,24 +101,14 @@ export function Avatar({ name }: { name: string }) {
 export function Logo() {
   return (
     <span className="logo">
-      <svg
-        width="31"
-        height="29"
-        viewBox="0 0 31 29"
-        fill="none"
+      <img
+        src="/logo.png"
+        alt=""
+        width={48}
+        height={48}
+        style={{ objectFit: 'contain' }}
         aria-hidden="true"
-      >
-        <path
-          d="M2 3h27L16 26l-3-10L2 3Z"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-        <path
-          d="m3 4 17 7-7 5M20 11l8-7"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-      </svg>
+      />
       SAQR<span className="logo-dot">.</span>
     </span>
   );
@@ -213,27 +203,11 @@ export function FieldVisual({ compact = false }: { compact?: boolean }) {
       role="img"
       aria-label="Illustrated aerial agricultural field with a planned survey route"
     >
-      <div className="field-grid" />
-      <svg viewBox="0 0 600 420" aria-hidden="true">
-        <path
-          d="M100 320V100h80v220h80V100h80v220h80V100h80"
-          stroke="#c4f58c"
-          strokeWidth="2"
-          strokeDasharray="7 7"
-          fill="none"
-        />
-        <circle cx="340" cy="188" r="30" fill="#b9ee8420" stroke="#b9ee84" />
-        <path
-          d="m327 182 26 12m-26 0 26-12m-13-7v27"
-          stroke="white"
-          strokeWidth="3"
-        />
-        <circle cx="100" cy="320" r="6" fill="#c4f58c" />
-      </svg>
-      <span className="map-label">35° 00′ N / FIELD STUDY 01</span>
-      <span className="map-status">
-        <span /> AGRICULTURE TRACK
-      </span>
+      <img 
+        src="/field.jpg" 
+        alt=""
+        style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
+      />
     </div>
   );
 }

@@ -1,14 +1,14 @@
 @theme {
-  --color-saqr: #b9ee84;
-  --font-sans: 'Segoe UI', Arial, sans-serif;
+  --color-saqr: #00a86b;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 :root {
   color-scheme: dark;
-  --background: #0d1210;
-  --foreground: #f3f5ef;
-  --muted: #a2ada4;
-  --border: #2c362f;
-  --primary: #b9ee84;
+  --background: #0a111f;
+  --foreground: #f0f4f8;
+  --muted: #8a9bb1;
+  --border: transparent;
+  --primary: #00a86b;
 }
 * {
   box-sizing: border-box;
@@ -18,9 +18,13 @@ html {
 }
 body {
   margin: 0;
-  background: var(--background);
+  background: 
+    linear-gradient(to bottom, #00a86b25 0%, transparent 250px),
+    linear-gradient(to top, #00a86b25 0%, transparent 450px),
+    var(--background);
+  background-repeat: no-repeat;
   color: var(--foreground);
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
 }
 a {
@@ -107,6 +111,7 @@ svg {
 .logo-dot {
   color: var(--primary);
   margin-left: -8px;
+  animation: pulseDot 2s infinite;
 }
 .button {
   display: inline-flex;
@@ -118,7 +123,7 @@ svg {
   border: 1px solid transparent;
   border-radius: 7px;
   background: var(--primary);
-  color: #14200e;
+  color: #ffffff;
   font-weight: 650;
   font-size: 0.86rem;
   transition:
@@ -126,7 +131,7 @@ svg {
     transform 0.2s;
 }
 .button:hover {
-  background: #cfffa6;
+  background: #00c77f;
   transform: translateY(-1px);
 }
 .button-secondary {
@@ -163,11 +168,12 @@ svg {
   color: var(--muted);
 }
 .card {
-  background: #151d18;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 26px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 20px 0;
   min-width: 0;
+  box-shadow: none;
 }
 .badge {
   display: inline-flex;
@@ -214,13 +220,15 @@ svg {
 .navigation a:hover {
   color: var(--primary);
 }
+.header-bg {
+  background: transparent;
+}
 .site-header {
   height: 91px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 25px;
-  border-bottom: 1px solid var(--border);
 }
 .header-actions {
   display: flex;
@@ -276,8 +284,7 @@ svg {
   position: relative;
   overflow: hidden;
   min-height: 445px;
-  border: 1px solid #40503d;
-  border-radius: 12px;
+  border: none;
   background:
     linear-gradient(125deg, #16291d99, #0b110ba0),
     repeating-linear-gradient(
@@ -350,10 +357,9 @@ svg {
   bottom: 0;
   right: 20px;
   left: 45px;
-  background: #1b271e;
-  border: 1px solid #43513e;
-  padding: 18px 22px;
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  padding: 18px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -450,7 +456,6 @@ svg {
   margin-top: 40px;
 }
 .journey-step {
-  border-top: 1px solid #516c43;
   padding-top: 20px;
 }
 .journey-step span {
@@ -462,10 +467,11 @@ svg {
   margin-top: 20px;
 }
 .preview {
-  background: #19251b;
-  border: 1px solid #3e5237;
-  padding: 35px;
-  border-radius: 13px;
+  background: transparent;
+  border: none;
+  padding: 20px 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 .preview h3 {
   font-size: 1.4rem;
@@ -478,7 +484,6 @@ svg {
 }
 .cta-band {
   text-align: center;
-  background: radial-gradient(ellipse at bottom, #34462955, transparent 75%);
   border-top: 1px solid var(--border);
 }
 .cta-band h2 {
@@ -730,7 +735,7 @@ svg {
 }
 .app-topbar {
   height: 81px;
-  border-bottom: 1px solid var(--border);
+  background: transparent;
   padding: 0 40px;
   display: flex;
   justify-content: space-between;
@@ -812,7 +817,7 @@ svg {
 .path-number {
   width: 33px;
   height: 33px;
-  border: 1px solid #46513f;
+  border: none;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -1169,6 +1174,51 @@ svg {
   .hero-actions .button {
     gap: 12px;
   }
+}
+
+/* --- ANIMATIONS & DYNAMICS --- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulseDot {
+  0% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 168, 107, 0.4); }
+  70% { opacity: 0.5; box-shadow: 0 0 0 6px transparent; }
+  100% { opacity: 1; box-shadow: 0 0 0 0 transparent; }
+}
+
+.hero h1 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.1s; }
+.hero-description { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.2s; }
+.hero-actions { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.3s; }
+
+.field-visual img {
+  animation: slowZoom 20s ease-in-out infinite;
+}
+
+.status-dot, .map-status > span {
+  animation: pulseDot 2s infinite;
+}
+
+.card, .preview {
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.card:hover, .preview:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.button {
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+.button:hover {
+  transform: scale(1.02);
 }
 @media (prefers-reduced-motion: reduce) {
   html {

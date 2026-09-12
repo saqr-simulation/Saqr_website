@@ -49,15 +49,6 @@ export default function Home() {
         </div>
         <div className="hero-art">
           <FieldVisual />
-          <div className="hero-art-caption">
-            <div>
-              <strong>A different view of agriculture.</strong>
-              <p className="muted">The first SAQR specialization</p>
-            </div>
-            <span className="text-saqr text-2xl" aria-hidden="true">
-              ↗
-            </span>
-          </div>
         </div>
       </section>
       <div className="container strip">
