@@ -2,12 +2,13 @@ import { Button, Logo, Navigation } from '@saqr/ui';
 import { platformUrl } from '../lib/config';
 const links = [
   ['Home', '/'],
-  ['About', '/about'],
   ['Training', '/training'],
   ['Agriculture', '/agriculture'],
-  ['Why SAQR', '/#why-saqr'],
+  ['Platform', '/#platform'],
+  ['About', '/about'],
   ['Contact', '/contact'],
 ];
+
 function Links() {
   return (
     <Navigation>
@@ -54,8 +55,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </a>
         <span>New perspectives. Grounded in purpose.</span>
         <div className="flex gap-5">
-          <a href="/contact">Contact & partnerships</a>
-          <a href={platformUrl('/login')}>Pilot login ↗</a>
+          <a href="/training">Training</a>
+          <a href="/agriculture">Agriculture</a>
+          <a href="/#platform">Platform</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
         </div>
         <span>© {new Date().getFullYear()} SAQR</span>
       </footer>

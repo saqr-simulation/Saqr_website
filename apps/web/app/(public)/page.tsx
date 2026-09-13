@@ -1,106 +1,164 @@
-import { Badge, Button, Card, FieldVisual, Progress } from '@saqr/ui';
+import { Badge, Button, Card, FieldVisual, Progress, Reveal } from '@saqr/ui';
 import { platformUrl } from '../../lib/config';
-const features = [
-  [
-    '01 / KNOWLEDGE',
-    'Learn with direction.',
-    'A structured curriculum that connects foundational knowledge with professional operating contexts.',
-  ],
-  [
-    '02 / APPLICATION',
-    'Give skills a purpose.',
-    'Explore how drone operations can support better decisions in the field, starting with agriculture.',
-  ],
-  [
-    '03 / PROGRESSION',
-    'Build your pilot identity.',
-    'A learning journey designed around competencies, progress and your future professional profile.',
-  ],
-];
+
 export default function Home() {
   return (
     <>
       <section className="hero container">
-        <div>
-          <p className="eyebrow">THE NEXT GENERATION OF DRONE PILOTS</p>
-          <h1>
-            Train for the future of <em>professional drone operations.</em>
-          </h1>
-          <p className="hero-description muted">
-            SAQR trains the next generation of professional drone pilots,
-            starting with agriculture.
-          </p>
-          <div className="hero-actions">
-            <Button asChild>
-              <a href={platformUrl()}>
-                Start Training <span aria-hidden="true">↗</span>
-              </a>
-            </Button>
-            <Button asChild variant="secondary">
-              <a href="/about">
-                Discover SAQR <span aria-hidden="true">→</span>
-              </a>
-            </Button>
-          </div>
-          <p className="hero-footnote">
-            <span className="status-dot" /> AGRICULTURE FIRST. BUILT FOR WHAT’S
-            NEXT.
-          </p>
-        </div>
-        <div className="hero-art">
-          <FieldVisual />
-        </div>
-      </section>
-      <div className="container strip">
-        <span>
-          BUILT AROUND <strong>REAL-WORLD PURPOSE</strong>
-        </span>
-        <span>01 / Professional education</span>
-        <span>02 / Practical competencies</span>
-        <span>03 / Industry applications</span>
-      </div>
-      <section className="section container">
-        <div className="section-heading">
+        <Reveal>
           <div>
-            <p className="eyebrow">OUR MISSION</p>
-            <h2>
-              More than flying.
-              <br />A foundation for your future.
-            </h2>
+            <p className="eyebrow">THE NEXT GENERATION OF DRONE PILOTS</p>
+            <h1>
+              Professional Drone Training,<br />
+              <em>Built for the Real World.</em>
+            </h1>
+            <p className="hero-description muted">
+              SAQR trains professional drone pilots with practical skills for agriculture and real-world industrial applications.
+            </p>
+            <div className="hero-actions">
+              <Button asChild>
+                <a href={platformUrl()}>
+                  Start Training <span aria-hidden="true">↗</span>
+                </a>
+              </Button>
+              <Button asChild variant="secondary">
+                <a href="/training">
+                  Explore Programs <span aria-hidden="true">→</span>
+                </a>
+              </Button>
+            </div>
+            <p className="hero-footnote">
+              <span className="status-dot" /> Learn. Practice. Assess. Certify.
+            </p>
           </div>
-          <p className="muted">
-            We’re connecting professional drone education, structured learning
-            and technology with the industries that need them.
-          </p>
-        </div>
+        </Reveal>
+        <Reveal delay={0.2} className="hero-art">
+          <FieldVisual />
+        </Reveal>
+      </section>
+
+      <section className="section container">
+        <Reveal>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">WHAT IS SAQR?</p>
+              <h2>
+                More than flying.<br />
+                We build professional drone operators.
+              </h2>
+            </div>
+            <p className="muted">
+              SAQR combines structured drone education, practical training and industry-oriented skills to prepare pilots for real operational environments.
+            </p>
+          </div>
+        </Reveal>
         <div className="grid-3">
-          {features.map(([number, title, description]) => (
-            <Card key={number} className="feature-card">
-              <p className="feature-number">{number}</p>
-              <h3>{title}</h3>
-              <p className="muted">{description}</p>
+          <Reveal delay={0.1}>
+            <Card className="feature-card">
+              <p className="feature-number">01 — LEARN</p>
+              <h3>Build the fundamentals</h3>
+              <p className="muted">Drone systems, flight principles, safety and operational knowledge.</p>
             </Card>
-          ))}
+          </Reveal>
+          <Reveal delay={0.2}>
+            <Card className="feature-card">
+              <p className="feature-number">02 — PRACTICE</p>
+              <h3>Develop real skills</h3>
+              <p className="muted">Train through practical scenarios and operational missions.</p>
+            </Card>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <Card className="feature-card">
+              <p className="feature-number">03 — CERTIFY</p>
+              <h3>Prove your skills</h3>
+              <p className="muted">Assess your knowledge and build a professional pilot profile.</p>
+            </Card>
+          </Reveal>
         </div>
       </section>
+
+      <section className="section container">
+        <Reveal>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">PROGRAMS</p>
+              <h2>Our Training Programs</h2>
+            </div>
+            <p className="muted">
+              Build the skills you need to operate drones professionally.
+            </p>
+          </div>
+        </Reveal>
+        <div className="grid-2">
+          <Reveal delay={0.1}>
+            <Card className="course-card">
+              <FieldVisual compact />
+              <div className="course-content">
+                <Badge>AGRICULTURE · DEMO CURRICULUM</Badge>
+                <h2>Agricultural Drone Operations</h2>
+                <p className="muted">
+                  Learn how professional drones are used in modern agriculture, from field inspection to precision operations.
+                </p>
+                <div className="use-cases" style={{ marginTop: '20px' }}>
+                  <span>Drone systems & safety</span>
+                  <span>Crop monitoring</span>
+                  <span>Field mapping</span>
+                  <span>Multispectral imaging</span>
+                  <span>Field inspection</span>
+                  <span>Precision agriculture</span>
+                </div>
+                <div style={{ marginTop: '30px' }}>
+                  <Button asChild>
+                    <a href="/agriculture">
+                      View program <span aria-hidden="true">↗</span>
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section container">
+        <Reveal>
+          <p className="eyebrow">TRAINING PROCESS</p>
+          <h2>How SAQR Training Works</h2>
+        </Reveal>
+        <div className="journey">
+          <Reveal delay={0.1} className="journey-step">
+            <span>01 /</span>
+            <h3>Learn</h3>
+          </Reveal>
+          <Reveal delay={0.2} className="journey-step">
+            <span>02 /</span>
+            <h3>Practice</h3>
+          </Reveal>
+          <Reveal delay={0.3} className="journey-step">
+            <span>03 /</span>
+            <h3>Assess</h3>
+          </Reveal>
+          <Reveal delay={0.4} className="journey-step">
+            <span>04 /</span>
+            <h3>Certify</h3>
+          </Reveal>
+          <Reveal delay={0.5} className="journey-step">
+            <span>05 /</span>
+            <h3>Build Your Pilot Profile</h3>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="agriculture-section">
         <div className="section container split">
-          <FieldVisual />
-          <div>
-            <p className="eyebrow">OUR FIRST HORIZON / AGRICULTURE</p>
-            <h2>
-              Better perspective.
-              <br />
-              Smarter possibilities.
-            </h2>
+          <Reveal>
+            <FieldVisual />
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className="eyebrow">APPLICATION</p>
+            <h2>Drone Technology Meets Agriculture.</h2>
             <p className="muted">
-              Agriculture offers a clear purpose for drone skills: understanding
-              land, observing crops and supporting precision decisions.
-            </p>
-            <p className="muted">
-              Our first training track introduces these applications. SAQR is a
-              training platform; these are learning topics, not services we
-              currently operate.
+              Learn how professional drone operations can support modern agriculture through data, inspection and precision workflows.
             </p>
             <div className="use-cases">
               {[
@@ -114,131 +172,103 @@ export default function Home() {
                 <span key={item}>{item}</span>
               ))}
             </div>
-            <a href="/agriculture" className="text-link">
-              Explore agriculture training ↗
-            </a>
-          </div>
-        </div>
-      </section>
-      <section className="section container">
-        <p className="eyebrow">YOUR TRAINING JOURNEY</p>
-        <h2>A clear path. A higher standard.</h2>
-        <p className="muted">
-          The journey we’re building, one milestone at a time.
-        </p>
-        <div className="journey">
-          {[
-            'Learn',
-            'Practice',
-            'Assess',
-            'Certify',
-            'Build your Pilot Profile',
-          ].map((step, index) => (
-            <div className="journey-step" key={step}>
-              <span>0{index + 1} /</span>
-              <h3>{step}</h3>
+            <div style={{ marginTop: '30px' }}>
+              <Button asChild variant="secondary">
+                <a href="/agriculture">
+                  Explore Agriculture Training <span aria-hidden="true">→</span>
+                </a>
+              </Button>
             </div>
-          ))}
+          </Reveal>
         </div>
-        <p className="legal-note">
-          Learning activities, assessments and SAQR course completion
-          certificates are planned for the next phases. Certificates will not
-          replace regulatory licenses.
-        </p>
       </section>
-      <section className="container section split">
-        <div>
-          <p className="eyebrow">YOUR LEARNING FLIGHT DECK</p>
-          <h2>
-            One place to see
-            <br />
-            how far you can go.
-          </h2>
+
+      <section id="platform" className="container section split">
+        <Reveal>
+          <p className="eyebrow">THE PLATFORM</p>
+          <h2>Your Training Journey, In One Place.</h2>
           <p className="muted">
-            Explore courses, follow your learning progress and build your pilot
-            profile. AI learning support and certification are on the roadmap.
+            Track your courses, progress, assessments and professional development from a single learning platform.
           </p>
           <Button asChild variant="secondary">
-            <a href={platformUrl()}>Explore the platform ↗</a>
+            <a href={platformUrl()}>Explore the Platform <span aria-hidden="true">↗</span></a>
           </Button>
-        </div>
-        <div className="preview">
-          <div className="flex justify-between items-center mb-7">
-            <span className="text-sm">SAQR / PILOT OVERVIEW</span>
+        </Reveal>
+        <Reveal delay={0.2} className="preview">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+            <span style={{ fontSize: '0.875rem' }}>SAQR / PILOT OVERVIEW</span>
             <Badge>DEMO PREVIEW</Badge>
           </div>
           <p className="eyebrow">CONTINUE TRAINING</p>
           <h3>Agricultural Drone Operations</h3>
-          <p className="muted text-sm">Module 2 · Drone Systems & Safety</p>
+          <p className="muted" style={{ fontSize: '0.875rem' }}>Module 2 · Drone Systems & Safety</p>
           <div className="preview-row">
             <span>7 of 20 sample lessons</span>
             <strong>35%</strong>
           </div>
           <Progress value={35} />
-          <div className="grid-2 mt-7">
+          <div className="grid-2" style={{ marginTop: '28px' }}>
             <Card>
-              <p className="text-sm">SAQR AI</p>
-              <span className="muted text-xs">Learning support · planned</span>
+              <p style={{ fontSize: '0.875rem' }}>Course progress</p>
+              <span className="muted" style={{ fontSize: '0.75rem' }}>Track your modules</span>
             </Card>
             <Card>
-              <p className="text-sm">Pilot Profile</p>
-              <span className="muted text-xs">Your professional journey</span>
+              <p style={{ fontSize: '0.875rem' }}>Pilot Profile</p>
+              <span className="muted" style={{ fontSize: '0.75rem' }}>Certificates & assessments</span>
             </Card>
           </div>
-        </div>
+        </Reveal>
       </section>
+
       <section id="why-saqr" className="section container">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">WHY SAQR</p>
-            <h2>
-              Designed for pilots.
-              <br />
-              Connected to industry.
-            </h2>
+        <Reveal>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">WHY SAQR</p>
+              <h2>Why Train With SAQR?</h2>
+            </div>
           </div>
-          <p className="muted">
-            A focused beginning in agriculture, with room to grow into new
-            professional specializations.
-          </p>
-        </div>
+        </Reveal>
         <div className="grid-3">
-          {[
-            [
-              'Industry-oriented',
-              'Learn with agricultural operating contexts in mind.',
-            ],
-            [
-              'Structured by design',
-              'Move through a clear sequence of knowledge and competencies.',
-            ],
-            [
-              'Built to grow',
-              'A foundation for AI-assisted learning, credentials and future tracks.',
-            ],
-          ].map(([title, text]) => (
-            <Card key={title}>
-              <h3>{title}</h3>
-              <p className="muted text-sm">{text}</p>
+          <Reveal delay={0.1}>
+            <Card>
+              <p className="feature-number">01 — Industry-oriented</p>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '10px' }}>Training built around real operational contexts.</h3>
             </Card>
-          ))}
+          </Reveal>
+          <Reveal delay={0.2}>
+            <Card>
+              <p className="feature-number">02 — Practical by design</p>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '10px' }}>Learn through a structured path from knowledge to practical assessment.</h3>
+            </Card>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <Card>
+              <p className="feature-number">03 — Built to grow</p>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '10px' }}>Develop skills, credentials and a professional pilot profile.</h3>
+            </Card>
+          </Reveal>
         </div>
       </section>
+
       <section className="section cta-band">
-        <div className="container">
-          <p className="eyebrow">YOUR FUTURE TAKES FLIGHT HERE</p>
-          <h2>
-            Start with curiosity.
-            <br />
-            Build with purpose.
-          </h2>
-          <p className="muted">
-            Your professional drone journey starts with the first step.
-          </p>
-          <Button asChild>
-            <a href={platformUrl()}>Start Your Pilot Journey ↗</a>
-          </Button>
-        </div>
+        <Reveal>
+          <div className="container">
+            <p className="eyebrow">YOUR FUTURE TAKES FLIGHT HERE</p>
+            <h2>
+              Start with curiosity.<br />
+              Build with purpose.
+            </h2>
+            <p className="muted">
+              Your professional drone journey starts with the first step.
+            </p>
+            <div style={{ marginTop: '30px' }}>
+              <Button asChild>
+                <a href={platformUrl()}>Start Your Pilot Journey <span aria-hidden="true">↗</span></a>
+              </Button>
+            </div>
+          </div>
+        </Reveal>
       </section>
     </>
   );

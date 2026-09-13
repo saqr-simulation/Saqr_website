@@ -8,6 +8,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 export { Dialog, Dropdown } from './overlays';
+export { Reveal } from './reveal';
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
