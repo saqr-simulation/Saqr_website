@@ -197,17 +197,74 @@ export function MetricCard({
     </Card>
   );
 }
-export function FieldVisual({ compact = false }: { compact?: boolean }) {
+export function FieldVisual({
+  compact = false,
+  variant = 'hero',
+}: {
+  compact?: boolean;
+  variant?:
+    | 'hero'
+    | 'orchard'
+    | 'training-programs'
+    | 'agriculture-feature'
+    | 'agriculture-detail'
+    | 'course-card'
+    | 'dashboard'
+    | 'auth';
+}) {
+  const visuals = {
+    hero: {
+      source: '/images/saqr-drone-agriculture-hero.png',
+      label: 'Professional survey drone above cultivated agricultural fields',
+    },
+    orchard: {
+      source: '/images/saqr-drone-orchard-training.png',
+      label: 'Professional survey drone flying over a citrus orchard',
+    },
+    'training-programs': {
+      source: '/images/saqr-drone-training-programs-v2.png',
+      label: 'Professional training drone flying above an orchard at sunrise',
+    },
+    'agriculture-feature': {
+      source: '/images/saqr-drone-agriculture-feature.png',
+      label: 'Survey drone mapping patchwork agricultural fields',
+    },
+    'agriculture-detail': {
+      source: '/images/saqr-drone-agriculture-detail.png',
+      label: 'Survey drone inspecting rows of young crops',
+    },
+    'course-card': {
+      source: '/images/saqr-drone-course-card.png',
+      label: 'Training drone above crops at sunrise',
+    },
+    dashboard: {
+      source: '/images/saqr-drone-dashboard-mission.png',
+      label: 'Top-down view of a drone mission over crop rows',
+    },
+    auth: {
+      source: '/images/saqr-drone-auth-welcome.png',
+      label: 'Drone taking flight over farmland at sunrise',
+    },
+  } as const;
+  const { source, label } = visuals[variant];
+
   return (
     <div
       className={cn('field-visual', compact && 'field-compact')}
+      data-variant={variant}
       role="img"
-      aria-label="Illustrated aerial agricultural field with a planned survey route"
+      aria-label={label}
     >
-      <img 
-        src="/field.jpg" 
+      <img
+        src={source}
         alt=""
-        style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          position: 'absolute',
+          inset: 0,
+        }}
       />
     </div>
   );
@@ -223,7 +280,7 @@ export function CourseCard({
 }) {
   return (
     <Card className="course-card">
-      <FieldVisual compact />
+      <FieldVisual compact variant="course-card" />
       <div className="course-content">
         <Badge>AGRICULTURE · DEMO CURRICULUM</Badge>
         <h2>{title}</h2>

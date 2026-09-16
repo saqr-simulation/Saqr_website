@@ -25,7 +25,7 @@ export default function AuthLayout({
             Build the knowledge to make every flight count. Starting with
             agriculture.
           </p>
-          <FieldVisual compact />
+          <FieldVisual compact variant="auth" />
         </div>
         <p className="muted text-sm">
           Professional learning. Real-world ambition.

@@ -1,5 +1,13 @@
 import { Badge, Button, Card, FieldVisual, Progress, Reveal } from '@saqr/ui';
+import { HeroDroneModel } from '../../components/hero-drone-model';
 import { platformUrl } from '../../lib/config';
+
+const trainingSteps = [
+  ['01', 'Learn', 'Build a solid understanding of systems, safety and flight principles.'],
+  ['02', 'Practice', 'Turn knowledge into reliable operational habits.'],
+  ['03', 'Assess', 'Validate your understanding through practical scenarios.'],
+  ['04', 'Progress', 'Build credentials and a professional pilot profile.'],
+];
 
 export default function Home() {
   return (
@@ -13,7 +21,8 @@ export default function Home() {
               <em>Built for the Real World.</em>
             </h1>
             <p className="hero-description muted">
-              SAQR trains professional drone pilots with practical skills for agriculture and real-world industrial applications.
+              SAQR trains professional drone pilots with practical knowledge,
+              operational awareness and industry-ready skills.
             </p>
             <div className="hero-actions">
               <Button asChild>
@@ -22,92 +31,76 @@ export default function Home() {
                 </a>
               </Button>
               <Button asChild variant="secondary">
-                <a href="/training">
+                <a href="#programs">
                   Explore Programs <span aria-hidden="true">→</span>
                 </a>
               </Button>
             </div>
             <p className="hero-footnote">
-              <span className="status-dot" /> Learn. Practice. Assess. Certify.
+              <span className="status-dot" /> Learn. Practice. Assess. Progress.
             </p>
           </div>
         </Reveal>
         <Reveal delay={0.2} className="hero-art">
-          <FieldVisual />
+          <HeroDroneModel />
         </Reveal>
       </section>
 
-      <section className="section container">
+      <section className="home-intro section container">
         <Reveal>
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">WHAT IS SAQR?</p>
-              <h2>
-                More than flying.<br />
-                We build professional drone operators.
-              </h2>
-            </div>
-            <p className="muted">
-              SAQR combines structured drone education, practical training and industry-oriented skills to prepare pilots for real operational environments.
-            </p>
+          <div className="home-intro-copy">
+            <p className="eyebrow">A CLEAR PATH TO PROFESSIONAL FLIGHT</p>
+            <h2>Learn the essentials. Build the confidence to operate with purpose.</h2>
           </div>
         </Reveal>
-        <div className="grid-3">
-          <Reveal delay={0.1}>
-            <Card className="feature-card">
-              <p className="feature-number">01 — LEARN</p>
-              <h3>Build the fundamentals</h3>
-              <p className="muted">Drone systems, flight principles, safety and operational knowledge.</p>
-            </Card>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <Card className="feature-card">
-              <p className="feature-number">02 — PRACTICE</p>
-              <h3>Develop real skills</h3>
-              <p className="muted">Train through practical scenarios and operational missions.</p>
-            </Card>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <Card className="feature-card">
-              <p className="feature-number">03 — CERTIFY</p>
-              <h3>Prove your skills</h3>
-              <p className="muted">Assess your knowledge and build a professional pilot profile.</p>
-            </Card>
-          </Reveal>
+        <Reveal delay={0.15}>
+          <p className="home-intro-text muted">
+            Our learning experience connects technical knowledge, field context and
+            responsible decision-making in one focused journey.
+          </p>
+        </Reveal>
+        <div className="home-principles">
+          {[
+            ['01', 'Operational foundations', 'Understand the equipment, rules and safety principles behind every mission.'],
+            ['02', 'Practical scenarios', 'Learn through workflows inspired by real field operations.'],
+            ['03', 'Professional growth', 'Track progress and develop a profile that grows with your skills.'],
+          ].map(([number, title, description], index) => (
+            <Reveal delay={0.1 + index * 0.1} key={number}>
+              <article className="home-principle">
+                <p className="feature-number">{number}</p>
+                <h3>{title}</h3>
+                <p className="muted">{description}</p>
+              </article>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      <section className="section container">
+      <section id="programs" className="section container">
         <Reveal>
           <div className="section-heading">
             <div>
-              <p className="eyebrow">PROGRAMS</p>
+              <p className="eyebrow">START WITH A REAL APPLICATION</p>
               <h2>Our Training Programs</h2>
             </div>
             <p className="muted">
-              Build the skills you need to operate drones professionally.
+              Begin with agriculture, where precision, observation and responsible
+              operations come together.
             </p>
           </div>
         </Reveal>
-        <div className="grid-2">
+        <div className="program-layout">
           <Reveal delay={0.1}>
             <Card className="course-card">
-              <FieldVisual compact />
+              <FieldVisual compact variant="training-programs" />
               <div className="course-content">
                 <Badge>AGRICULTURE · DEMO CURRICULUM</Badge>
                 <h2>Agricultural Drone Operations</h2>
                 <p className="muted">
-                  Learn how professional drones are used in modern agriculture, from field inspection to precision operations.
+                  Learn how professional drones support field inspection, mapping
+                  and precision workflows.
                 </p>
-                <div className="use-cases" style={{ marginTop: '20px' }}>
-                  <span>Drone systems & safety</span>
-                  <span>Crop monitoring</span>
-                  <span>Field mapping</span>
-                  <span>Multispectral imaging</span>
-                  <span>Field inspection</span>
-                  <span>Precision agriculture</span>
-                </div>
-                <div style={{ marginTop: '30px' }}>
+                <div style={{ marginTop: '28px' }}>
                   <Button asChild>
                     <a href="/agriculture">
                       View program <span aria-hidden="true">↗</span>
@@ -117,60 +110,61 @@ export default function Home() {
               </div>
             </Card>
           </Reveal>
+          <Reveal delay={0.2} className="program-outline">
+            <p className="eyebrow">WHAT YOU WILL EXPLORE</p>
+            <div className="use-cases">
+              <span>Drone systems & safety</span>
+              <span>Crop monitoring</span>
+              <span>Field mapping</span>
+              <span>Multispectral imaging</span>
+              <span>Field inspection</span>
+              <span>Precision agriculture</span>
+            </div>
+            <p className="muted program-note">
+              A structured starting point for pilots preparing to work with real
+              agricultural contexts.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      <section className="section container">
+      <section className="section container training-path-section">
         <Reveal>
-          <p className="eyebrow">TRAINING PROCESS</p>
-          <h2>How SAQR Training Works</h2>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">HOW THE JOURNEY WORKS</p>
+              <h2>From first flight to professional perspective.</h2>
+            </div>
+          </div>
         </Reveal>
         <div className="journey">
-          <Reveal delay={0.1} className="journey-step">
-            <span>01 /</span>
-            <h3>Learn</h3>
-          </Reveal>
-          <Reveal delay={0.2} className="journey-step">
-            <span>02 /</span>
-            <h3>Practice</h3>
-          </Reveal>
-          <Reveal delay={0.3} className="journey-step">
-            <span>03 /</span>
-            <h3>Assess</h3>
-          </Reveal>
-          <Reveal delay={0.4} className="journey-step">
-            <span>04 /</span>
-            <h3>Certify</h3>
-          </Reveal>
-          <Reveal delay={0.5} className="journey-step">
-            <span>05 /</span>
-            <h3>Build Your Pilot Profile</h3>
-          </Reveal>
+          {trainingSteps.map(([number, title, description], index) => (
+            <Reveal delay={0.1 + index * 0.1} className="journey-step" key={number}>
+              <span>{number}</span>
+              <h3>{title}</h3>
+              <p className="muted">{description}</p>
+            </Reveal>
+          ))}
         </div>
       </section>
 
       <section className="agriculture-section">
         <div className="section container split">
           <Reveal>
-            <FieldVisual />
+            <FieldVisual variant="agriculture-feature" />
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="eyebrow">APPLICATION</p>
-            <h2>Drone Technology Meets Agriculture.</h2>
+            <p className="eyebrow">AGRICULTURE FIRST</p>
+            <h2>See the field differently.</h2>
             <p className="muted">
-              Learn how professional drone operations can support modern agriculture through data, inspection and precision workflows.
+              Explore how drone operations support informed agricultural decisions
+              through observation, mapping and data-led workflows.
             </p>
             <div className="use-cases">
-              {[
-                'Crop monitoring',
-                'Field mapping',
-                'Multispectral imaging',
-                'Field inspection',
-                'Precision agriculture',
-                'Spraying concepts',
-              ].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
+              <span>Crop monitoring</span>
+              <span>Field mapping</span>
+              <span>Imaging workflows</span>
+              <span>Precision agriculture</span>
             </div>
             <div style={{ marginTop: '30px' }}>
               <Button asChild variant="secondary">
@@ -183,72 +177,39 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="platform" className="container section split">
+      <section id="platform" className="container section split platform-story">
         <Reveal>
-          <p className="eyebrow">THE PLATFORM</p>
-          <h2>Your Training Journey, In One Place.</h2>
+          <p className="eyebrow">THE SAQR PLATFORM</p>
+          <h2>Keep every stage of your learning journey in view.</h2>
           <p className="muted">
-            Track your courses, progress, assessments and professional development from a single learning platform.
+            Access your courses, track your progress and prepare for your next
+            assessment from one focused learning space.
           </p>
           <Button asChild variant="secondary">
-            <a href={platformUrl()}>Explore the Platform <span aria-hidden="true">↗</span></a>
+            <a href={platformUrl()}>
+              Explore the Platform <span aria-hidden="true">↗</span>
+            </a>
           </Button>
         </Reveal>
         <Reveal delay={0.2} className="preview">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
-            <span style={{ fontSize: '0.875rem' }}>SAQR / PILOT OVERVIEW</span>
+          <div className="preview-heading">
+            <span>SAQR / PILOT OVERVIEW</span>
             <Badge>DEMO PREVIEW</Badge>
           </div>
           <p className="eyebrow">CONTINUE TRAINING</p>
           <h3>Agricultural Drone Operations</h3>
-          <p className="muted" style={{ fontSize: '0.875rem' }}>Module 2 · Drone Systems & Safety</p>
+          <p className="muted">Module 2 · Drone Systems & Safety</p>
           <div className="preview-row">
             <span>7 of 20 sample lessons</span>
             <strong>35%</strong>
           </div>
           <Progress value={35} />
-          <div className="grid-2" style={{ marginTop: '28px' }}>
-            <Card>
-              <p style={{ fontSize: '0.875rem' }}>Course progress</p>
-              <span className="muted" style={{ fontSize: '0.75rem' }}>Track your modules</span>
-            </Card>
-            <Card>
-              <p style={{ fontSize: '0.875rem' }}>Pilot Profile</p>
-              <span className="muted" style={{ fontSize: '0.75rem' }}>Certificates & assessments</span>
-            </Card>
+          <div className="platform-highlights">
+            <span>Courses & progress</span>
+            <span>Assessments</span>
+            <span>Pilot profile</span>
           </div>
         </Reveal>
-      </section>
-
-      <section id="why-saqr" className="section container">
-        <Reveal>
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">WHY SAQR</p>
-              <h2>Why Train With SAQR?</h2>
-            </div>
-          </div>
-        </Reveal>
-        <div className="grid-3">
-          <Reveal delay={0.1}>
-            <Card>
-              <p className="feature-number">01 — Industry-oriented</p>
-              <h3 style={{ fontSize: '1.2rem', marginTop: '10px' }}>Training built around real operational contexts.</h3>
-            </Card>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <Card>
-              <p className="feature-number">02 — Practical by design</p>
-              <h3 style={{ fontSize: '1.2rem', marginTop: '10px' }}>Learn through a structured path from knowledge to practical assessment.</h3>
-            </Card>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <Card>
-              <p className="feature-number">03 — Built to grow</p>
-              <h3 style={{ fontSize: '1.2rem', marginTop: '10px' }}>Develop skills, credentials and a professional pilot profile.</h3>
-            </Card>
-          </Reveal>
-        </div>
       </section>
 
       <section className="section cta-band">
@@ -259,12 +220,12 @@ export default function Home() {
               Start with curiosity.<br />
               Build with purpose.
             </h2>
-            <p className="muted">
-              Your professional drone journey starts with the first step.
-            </p>
+            <p className="muted">Your professional drone journey starts here.</p>
             <div style={{ marginTop: '30px' }}>
               <Button asChild>
-                <a href={platformUrl()}>Start Your Pilot Journey <span aria-hidden="true">↗</span></a>
+                <a href={platformUrl()}>
+                  Start Your Pilot Journey <span aria-hidden="true">↗</span>
+                </a>
               </Button>
             </div>
           </div>

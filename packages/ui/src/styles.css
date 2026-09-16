@@ -1,7 +1,7 @@
 @theme {
   --color-saqr: #00a86b;
-  --font-sans: var(--font-manrope), system-ui, sans-serif;
-  --font-serif: var(--font-libre-baskerville), serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-serif: var(--font-space-grotesk), system-ui, sans-serif;
 }
 :root {
   color-scheme: dark;
@@ -913,6 +913,353 @@ svg {
 .skip-link:focus {
   top: 10px;
 }
+/* Elevated visual direction: technical field data meets premium editorial imagery. */
+:root {
+  --border: rgb(189 229 217 / 0.14);
+}
+
+body {
+  background:
+    linear-gradient(to bottom, #00a86b25 0%, transparent 300px),
+    linear-gradient(to top, #00a86b25 0%, transparent 520px),
+    var(--background);
+  background-attachment: fixed;
+}
+
+body::before {
+  display: none;
+}
+
+.button {
+  border-radius: 11px;
+  background: linear-gradient(135deg, #00bf7b, #009c68);
+  box-shadow: 0 10px 24px #00a86b2b;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #10d990, #00a86b);
+  box-shadow: 0 14px 30px #00a86b40;
+}
+
+.button-secondary {
+  border-color: rgb(203 236 226 / 0.28);
+  background: rgb(9 23 31 / 0.5);
+  backdrop-filter: blur(12px);
+}
+
+.button-secondary:hover,
+.button-ghost:hover {
+  background: rgb(206 241 229 / 0.1);
+}
+
+.card {
+  position: relative;
+  padding: 20px 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: none;
+}
+
+.card:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+.feature-card::after {
+  display: none;
+}
+
+.field-visual {
+  min-height: 445px;
+  border: 0;
+  border-radius: 18px;
+  background: #0b1720;
+  box-shadow: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+.field-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgb(4 17 25 / 0.48), transparent 42%, rgb(0 168 107 / 0.17)),
+    linear-gradient(to top, rgb(5 15 22 / 0.43), transparent 40%);
+}
+
+.field-visual::after {
+  display: none;
+}
+
+.field-visual img {
+  z-index: 0;
+  filter: saturate(1.08) contrast(1.04) brightness(0.92);
+  transform: scale(1.025);
+  transition: transform 0.7s cubic-bezier(0.2, 0.65, 0.2, 1), filter 0.4s ease;
+}
+
+.field-visual:hover img {
+  filter: saturate(1.16) contrast(1.07) brightness(0.98);
+  transform: scale(1.075);
+}
+
+.field-visual[data-variant='agriculture-feature'] img {
+  object-position: 42% center;
+}
+
+.field-visual[data-variant='dashboard'] img {
+  object-position: 70% center;
+}
+
+.field-compact {
+  min-height: 210px;
+  border-radius: 14px;
+}
+
+.field-compact::after {
+  display: none;
+}
+
+.course-card,
+.continue-card {
+  padding: 0;
+}
+
+.auth-story .field-visual {
+  border-radius: 18px;
+}
+
+.hero-art {
+  isolation: isolate;
+  min-height: 445px;
+  display: grid;
+  place-items: center;
+}
+
+.hero-art .field-visual {
+  transform: rotate(1.25deg);
+  transition: transform 0.35s ease;
+}
+
+.hero-art:hover .field-visual {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+.hero-brand-mark {
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.hero-brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 26px rgb(0 0 0 / 0.32));
+}
+
+.hero-drone-model {
+  width: 100%;
+  min-height: 420px;
+  position: relative;
+}
+
+.hero-drone-model canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 24px 26px rgb(0 0 0 / 0.28));
+}
+
+.home-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: 42px 80px;
+  align-items: end;
+}
+
+.home-intro-copy h2 {
+  max-width: 700px;
+  margin-bottom: 0;
+}
+
+.home-intro-text {
+  max-width: 420px;
+  margin-bottom: 4px;
+}
+
+.home-principles {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
+  margin-top: 12px;
+}
+
+.home-principle .feature-number {
+  margin-bottom: 18px;
+}
+
+.home-principle h3 {
+  margin-bottom: 10px;
+}
+
+.home-principle p:last-child {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.program-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  gap: 70px;
+  align-items: center;
+}
+
+.program-outline {
+  max-width: 380px;
+}
+
+.program-note {
+  margin: 28px 0 0;
+  font-size: 0.9rem;
+}
+
+.training-path-section .journey {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.journey-step p {
+  font-size: 0.84rem;
+  margin-bottom: 0;
+}
+
+.preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 34px;
+  font-size: 0.8rem;
+}
+
+.platform-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.platform-highlights span::before {
+  content: '•';
+  color: var(--primary);
+  margin-right: 7px;
+}
+
+.section-heading {
+  position: relative;
+}
+
+.section-heading::before {
+  content: '';
+  width: 42px;
+  height: 2px;
+  position: absolute;
+  top: -18px;
+  left: 0;
+  background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+.agriculture-section {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border-block-color: rgb(156 224 205 / 0.16);
+}
+
+.agriculture-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(120deg, transparent 49.7%, rgb(144 231 194 / 0.08) 50%, transparent 50.3%);
+  background-size: 44px 44px;
+}
+
+.agriculture-section .section {
+  position: relative;
+}
+
+.journey {
+  position: relative;
+  gap: 14px;
+}
+
+.journey::before {
+  display: none;
+}
+
+.journey-step {
+  position: relative;
+  padding: 20px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.journey-step span {
+  position: relative;
+  z-index: 1;
+  display: inline;
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.preview {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 20px 0;
+}
+
+.continue-card {
+  gap: 28px;
+  overflow: visible;
+  border-radius: 0;
+}
+
+.continue-card .field-visual {
+  border-radius: 18px;
+  border: 0;
+}
+
 @media (min-width: 1500px) {
   .hero {
     padding-block: 100px;
@@ -979,8 +1326,17 @@ svg {
     z-index: 20;
   }
   .hero,
-  .split {
+  .split,
+  .home-intro,
+  .program-layout {
     grid-template-columns: 1fr;
+  }
+  .home-intro,
+  .program-layout {
+    gap: 32px;
+  }
+  .hero-drone-model {
+    min-height: 360px;
   }
   .hero h1 {
     font-size: clamp(2.8rem, 8vw, 4.5rem);
@@ -1104,8 +1460,18 @@ svg {
   .grid-2 {
     grid-template-columns: 1fr;
   }
+  .home-principles {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
   .journey {
     grid-template-columns: 1fr 1fr;
+  }
+  .training-path-section .journey {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-drone-model {
+    min-height: 290px;
   }
   .site-footer {
     flex-direction: column;

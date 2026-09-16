@@ -9,7 +9,7 @@ export default function Agriculture() {
         description="Understand the role of drone operations in modern agriculture."
       />
       <div className="split">
-        <FieldVisual />
+        <FieldVisual variant="agriculture-detail" />
         <div>
           <h2>
             From aerial perspective

@@ -65,7 +65,7 @@ export default async function Dashboard() {
                 </a>
               </Button>
             </div>
-            <FieldVisual compact />
+            <FieldVisual compact variant="dashboard" />
           </Card>
           <Card>
             <h2>Your training path</h2>
