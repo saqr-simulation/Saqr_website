@@ -14,6 +14,7 @@
     "db:generate": "pnpm --filter @saqr/core-api db:generate",
     "db:migrate": "pnpm --filter @saqr/core-api db:migrate",
     "db:seed": "pnpm --filter @saqr/core-api db:seed",
+    "db:verify": "pnpm --filter @saqr/core-api db:verify",
     "test": "pnpm --filter @saqr/core-api test"
   },
   "devDependencies": {

@@ -29,3 +29,36 @@ export const demoProgress = {
   totalLessons: 20,
   trainingHours: 3.5,
 } as const;
+
+export const demoUsers = {
+  traineeStudent: {
+    id: '00000000-0000-4000-8000-000000000001',
+    email: 'demo.student@example.invalid',
+    name: 'Demo Pilot',
+    role: 'STUDENT' as const,
+  },
+  graduateStudent: {
+    id: '00000000-0000-4000-8000-000000000002',
+    email: 'sarah.pilot@example.invalid',
+    name: 'Sarah Amrani',
+    role: 'STUDENT' as const,
+  },
+  newStudent: {
+    id: '00000000-0000-4000-8000-000000000003',
+    email: 'amine.pilot@example.invalid',
+    name: 'Amine Tazi',
+    role: 'STUDENT' as const,
+  },
+  instructor: {
+    id: '00000000-0000-4000-8000-000000000010',
+    email: 'karim.instructor@example.invalid',
+    name: 'Capt. Karim Alami',
+    role: 'INSTRUCTOR' as const,
+  },
+  admin: {
+    id: '00000000-0000-4000-8000-000000000099',
+    email: 'admin@saqr.invalid',
+    name: 'Platform Admin',
+    role: 'ADMIN' as const,
+  },
+} as const;
