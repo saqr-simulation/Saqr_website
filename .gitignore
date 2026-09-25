@@ -10,3 +10,4 @@ __pycache__/
 *.tsbuildinfo
 .local-tools/
 tmp/
+*.egg-info/
