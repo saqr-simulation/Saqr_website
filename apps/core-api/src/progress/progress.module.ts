@@ -1,4 +1,11 @@
 import { Module } from '@nestjs/common';
-// Reserved boundary; add authorized use cases here when the learning flow ships.
-@Module({})
+import { AuthModule } from '../auth/auth.module';
+import { UsersModule } from '../users/users.module';
+import { ProgressController } from './progress.controller';
+import { ProgressService } from './progress.service';
+@Module({
+  imports: [AuthModule, UsersModule],
+  controllers: [ProgressController],
+  providers: [ProgressService],
+})
 export class ProgressModule {}

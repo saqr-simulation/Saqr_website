@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+const directUrl = process.env.DIRECT_URL;
+if (!directUrl)
+  throw new Error('DIRECT_URL is required for database seeding.');
+const prisma = new PrismaClient({ datasourceUrl: directUrl });
 const modules = [
   [
     'Introduction to Agricultural Drones',
@@ -39,9 +42,8 @@ const modules = [
   ],
 ];
 async function seed() {
-  await prisma.$transaction(async (tx) => {
-    const userId = '00000000-0000-4000-8000-000000000001';
-    await tx.user.upsert({
+  const userId = '00000000-0000-4000-8000-000000000001';
+  await prisma.user.upsert({
       where: { id: userId },
       update: {},
       create: {
@@ -49,8 +51,8 @@ async function seed() {
         email: 'demo.student@example.invalid',
         name: 'Demo Pilot',
       },
-    });
-    const course = await tx.course.upsert({
+  });
+  const course = await prisma.course.upsert({
       where: { slug: 'agricultural-drone-operations' },
       update: {},
       create: {
@@ -61,16 +63,16 @@ async function seed() {
           'Sample curriculum for safety, preparation, imaging and agricultural applications.',
         status: 'PUBLISHED',
       },
-    });
-    const enrollment = await tx.enrollment.upsert({
+  });
+  const enrollment = await prisma.enrollment.upsert({
       where: { userId_courseId: { userId, courseId: course.id } },
       update: {},
       create: { id: 'demo-enrollment', userId, courseId: course.id },
-    });
-    for (const [index, items] of modules.entries()) {
+  });
+  for (const [index, items] of modules.entries()) {
       const title = items[0]!;
       const moduleId = `agriculture-module-${index + 1}`;
-      await tx.module.upsert({
+    await prisma.module.upsert({
         where: { id: moduleId },
         update: {},
         create: {
@@ -79,10 +81,10 @@ async function seed() {
           title,
           position: index + 1,
         },
-      });
-      for (const [position, lessonTitle] of items.slice(1).entries()) {
+    });
+    for (const [position, lessonTitle] of items.slice(1).entries()) {
         const lessonId = `agriculture-lesson-${index * 4 + position + 1}`;
-        await tx.lesson.upsert({
+      await prisma.lesson.upsert({
           where: { id: lessonId },
           update: {},
           create: {
@@ -93,9 +95,9 @@ async function seed() {
             content:
               'Demo lesson outline. Full learning material is planned for Week 2.',
           },
-        });
-        if (index * 4 + position < 7)
-          await tx.lessonProgress.upsert({
+      });
+      if (index * 4 + position < 7)
+        await prisma.lessonProgress.upsert({
             where: {
               enrollmentId_lessonId: { enrollmentId: enrollment.id, lessonId },
             },
@@ -105,10 +107,10 @@ async function seed() {
               lessonId,
               completedAt: new Date('2026-01-01T12:00:00Z'),
             },
-          });
-      }
+        });
     }
-    await tx.quiz.upsert({
+  }
+  await prisma.quiz.upsert({
       where: { id: 'agriculture-safety-quiz' },
       update: {},
       create: {
@@ -116,8 +118,8 @@ async function seed() {
         moduleId: 'agriculture-module-2',
         title: 'Drone Systems & Safety',
       },
-    });
-    await tx.question.upsert({
+  });
+  await prisma.question.upsert({
       where: { id: 'agriculture-safety-question' },
       update: {},
       create: {
@@ -132,15 +134,17 @@ async function seed() {
         answerIndex: 0,
         position: 1,
       },
-    });
   });
   console.log(
     'Seeded one database-only demo student and one agriculture course. No Supabase login was created.',
   );
 }
 seed()
-  .catch(() => {
-    console.error('Seed failed. Check database configuration and migrations.');
+  .catch((error: unknown) => {
+    console.error(
+      'Seed failed:',
+      error instanceof Error ? error.message : 'Unknown database error.',
+    );
     process.exitCode = 1;
   })
   .finally(() => prisma.$disconnect());

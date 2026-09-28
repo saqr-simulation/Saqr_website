@@ -17,7 +17,7 @@ The database password in Compose is only for the loopback-bound local container.
 
 ## Supabase Auth
 
-Create or select your project. Put the project URL and public anon/publishable key in `apps/platform/.env.local`; use the matching values under `SUPABASE_URL` and `SUPABASE_ANON_KEY` in `apps/core-api/.env`. The Core API does not need a service-role key to validate tokens.
+Create or select your project. Put the project URL and public publishable key in `apps/platform/.env.local`; use the matching values under `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in `apps/core-api/.env`. The Core API verifies bearer JWTs locally with the project's JWKS and does not need a secret key for user authentication.
 
 Set the Auth Site URL to `http://localhost:3001` and allow the local platform domain in the project's redirect configuration. For production use `https://app.saqr.com`.
 

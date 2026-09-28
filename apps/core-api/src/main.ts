@@ -25,9 +25,9 @@ async function bootstrap() {
     new DocumentBuilder()
       .setTitle('SAQR Core API')
       .setDescription(
-        'Week 1 platform API. Learning and AI endpoints will follow.',
+        'SAQR platform API for courses, enrollment, progress and assessments.',
       )
-      .setVersion('0.1.0')
+      .setVersion('0.2.0')
       .addBearerAuth()
       .build(),
   );
@@ -35,11 +35,10 @@ async function bootstrap() {
   await app.listen(config.PORT, '0.0.0.0');
 }
 bootstrap().catch((error: unknown) => {
-  console.error(
-    error instanceof Error &&
-      error.message.startsWith('Invalid Core API configuration:')
-      ? error.message
-      : 'Core API startup failed. Check environment configuration and PostgreSQL availability.',
-  );
+  const message =
+    error instanceof Error
+      ? error.message.replace(/postgresql:\/\/[^\s@]+@/g, 'postgresql://***@')
+      : 'Unknown startup error.';
+  console.error(`Core API startup failed: ${message}`);
   process.exitCode = 1;
 });
