@@ -1,4 +1,5 @@
-import { Badge, Button, Card, FieldVisual, Progress } from '@saqr/ui';
+import { Badge, Button, Card, Progress } from '@saqr/ui';
+import { FieldMission } from '../../components/field-mission';
 import { DroneHero } from '../../components/drone-hero';
 import { platformUrl } from '../../lib/config';
 import { trainingStages } from '../../lib/messaging';
@@ -135,7 +136,7 @@ export default function Home() {
       </section>
       <section className="agriculture-section">
         <div className="section container split">
-          <FieldVisual />
+          <FieldMission />
           <div>
             <p className="eyebrow">OUR FIRST HORIZON / AGRICULTURE</p>
             <h2>

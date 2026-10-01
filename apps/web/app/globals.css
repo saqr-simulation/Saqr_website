@@ -761,22 +761,6 @@ h2 {
   color: #a9c7bd;
   margin: 4px 0 0;
 }
-.drone-controls {
-  display: flex;
-  gap: 6px;
-}
-.drone-controls button {
-  width: 33px;
-  height: 33px;
-  color: #d6eee5;
-  background: #ffffff09;
-  border: 1px solid #ffffff25;
-  border-radius: 50%;
-  font-size: 0.8rem;
-}
-.drone-controls button:hover {
-  background: #ffffff20;
-}
 .strip {
   padding-block: 27px;
   font-size: 0.65rem;
@@ -819,6 +803,74 @@ h2 {
 }
 .field-visual {
   border-radius: 16px;
+}
+.field-mission {
+  background: radial-gradient(ellipse at top right, #28584c, #102e2b);
+  border: 1px solid #315c4e;
+  border-radius: 16px;
+  color: #dff7e9;
+  padding: 22px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px #153b2915;
+}
+.mission-toolbar,
+.mission-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mission-toolbar > span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+}
+.mission-modes {
+  display: flex;
+  gap: 6px;
+  margin-top: 18px;
+}
+.mission-modes button {
+  background: transparent;
+  border: 1px solid #a9c7bd30;
+  border-radius: 7px;
+  color: #b5cfc1;
+  padding: 9px 12px;
+  font: inherit;
+  font-size: 0.65rem;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.mission-modes button[aria-pressed='true'] {
+  color: #102e2b;
+  background: #70e6b6;
+  border-color: #70e6b6;
+}
+.field-mission button:focus-visible {
+  outline: 2px solid #dff7e9;
+  outline-offset: 3px;
+}
+.field-mission svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.mission-caption {
+  flex-wrap: wrap;
+  font-size: 0.6rem;
+  color: #d3e9de;
+}
+.mission-legend {
+  color: #70e6b6;
+  white-space: pre;
+}
+.mission-disclaimer {
+  font-size: 0.56rem;
+  color: #a9c7bd;
+  margin: 10px 0 0;
 }
 .journey {
   grid-template-columns: repeat(4, minmax(0, 1fr));

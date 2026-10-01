@@ -5,11 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 /** A locally constructed agricultural aircraft: no external model or texture requests. */
 export function DroneHero() {
   const host = useRef<HTMLDivElement>(null);
-  const controls = useRef<{
-    pause: (value: boolean) => void;
-  } | null>(null);
   const [ready, setReady] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
@@ -253,12 +249,6 @@ export function DroneHero() {
         renderer.domElement.addEventListener('webglcontextlost', contextLost);
         document.addEventListener('visibilitychange', onVisibility);
         motion.addEventListener('change', onMotion);
-        controls.current = {
-          pause(value) {
-            stopped = value;
-            if (!value) resume();
-          },
-        };
         drone.rotation.y = yaw;
         resize();
         setReady(true);
@@ -288,7 +278,6 @@ export function DroneHero() {
           );
           renderer.dispose();
           renderer.domElement.remove();
-          controls.current = null;
         };
       } catch {
         if (!disposed) setFailed(true);
@@ -353,22 +342,6 @@ export function DroneHero() {
               : 'Aircraft concept · drag to rotate'}
           </p>
         </div>
-        {ready && !failed && (
-          <div className="drone-controls">
-            <button
-              aria-label={
-                paused ? 'Resume drone animation' : 'Pause drone animation'
-              }
-              aria-pressed={paused}
-              onClick={() => {
-                controls.current?.pause(!paused);
-                setPaused(!paused);
-              }}
-            >
-              {paused ? '▶' : 'Ⅱ'}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
