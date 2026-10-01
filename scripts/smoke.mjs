@@ -2,7 +2,16 @@ import assert from 'node:assert/strict';
 
 const web = process.env.WEB_URL || 'http://localhost:3000';
 const platform = process.env.PLATFORM_URL || 'http://localhost:3001';
-for (const path of ['/', '/about', '/training', '/agriculture', '/contact']) {
+for (const path of [
+  '/',
+  '/about',
+  '/training',
+  '/agriculture',
+  '/contact',
+  '/saqr-cup',
+  '/waitlist',
+  '/demo',
+]) {
   const response = await fetch(new URL(path, web));
   assert.equal(response.status, 200, `Public route ${path}`);
   const html = await response.text();

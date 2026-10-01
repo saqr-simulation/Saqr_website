@@ -170,3 +170,20 @@ model Document {
   @@index([courseId])
   @@index([uploaderId])
 }
+
+// Public website inquiries are independent of authenticated learner accounts.
+model WebsiteLead {
+  id           Int      @id @default(autoincrement())
+  kind         String
+  email        String
+  name         String
+  phone        String?
+  profile      Json
+  referralCode String   @unique @default(uuid())
+  referredBy   String?
+  consentAt    DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  @@unique([kind, email])
+  @@index([kind, createdAt])
+}

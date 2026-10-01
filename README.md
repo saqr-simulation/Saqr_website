@@ -53,12 +53,13 @@ node scripts/smoke.mjs # HTTP checks against running Next.js applications
 
 ## Included
 
-- Five public pages, responsive navigation, agriculture-focused visual identity.
+- Eight public pages, responsive navigation, interactive 3D drone and agriculture-focused visual identity.
+- Pilot waitlist, SAQR Cup interest and institutional demo forms with persistent inquiries and referral sharing.
 - Shared Tailwind/shadcn-style Radix components, forms, overlays, states and cards.
 - Supabase registration, login, email confirmation, session refresh, logout and protected student routes.
 - Dashboard, sample course catalog/outline, lesson workspace and pilot profile.
 - Explicit placeholders for assessments, certificates and AI; no invented functioning capabilities.
-- Eleven Prisma models, SQL migration, deterministic sample curriculum and database-only demo student.
+- Twelve Prisma models, SQL migrations, deterministic sample curriculum and database-only demo student.
 - NestJS verified bearer-token guard, user synchronization, protected catalog, health/readiness and OpenAPI.
 - Private Supabase Storage provisioning SQL and independent FastAPI health endpoint.
 
@@ -74,3 +75,4 @@ Build, lint, strict TypeScript and authorization checks have passed. Both Next.j
 - [Local development and authentication setup](docs/local-development.md)
 - [Environment variables](docs/environment.md)
 - [Verification and remaining work](docs/verification.md)
+- [Website inquiries and launch scope](docs/website-inquiries.md)

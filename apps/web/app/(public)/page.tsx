@@ -1,20 +1,22 @@
 import { Badge, Button, Card, FieldVisual, Progress } from '@saqr/ui';
+import { DroneHero } from '../../components/drone-hero';
 import { platformUrl } from '../../lib/config';
+import { trainingStages } from '../../lib/messaging';
 const features = [
   [
     '01 / KNOWLEDGE',
-    'Learn with direction.',
-    'A structured curriculum that connects foundational knowledge with professional operating contexts.',
+    'Understand the aircraft.',
+    'Build a foundation in drone systems, mission planning and responsible operation before taking to the field.',
   ],
   [
     '02 / APPLICATION',
-    'Give skills a purpose.',
-    'Explore how drone operations can support better decisions in the field, starting with agriculture.',
+    'Make practice meaningful.',
+    'Explore a simulation-led approach to precision flight, terrain awareness and agricultural mission preparation.',
   ],
   [
     '03 / PROGRESSION',
-    'Build your pilot identity.',
-    'A learning journey designed around competencies, progress and your future professional profile.',
+    'See your next milestone.',
+    'Connect your learning progress and pilot profile with a clear path toward professional readiness.',
   ],
 ];
 export default function Home() {
@@ -23,23 +25,27 @@ export default function Home() {
       <div className="hero-band dark-surface">
         <section className="hero container">
           <div>
-            <p className="eyebrow">THE NEXT GENERATION OF DRONE PILOTS</p>
+            <p className="eyebrow">DRONE SIMULATION / AGRICULTURE FIRST</p>
             <h1>
-              Train for the future of <em>professional drone operations.</em>
+              Crash here.
+              <br />
+              <em>Succeed there.</em>
             </h1>
             <p className="hero-description muted">
-              SAQR trains the next generation of professional drone pilots,
-              starting with agriculture.
+              Prepare for demanding drone missions before taking a real aircraft
+              into the field. SAQR brings structured education and
+              simulation-led practice together to build confidence in
+              agricultural operations.
             </p>
             <div className="hero-actions">
               <Button asChild>
-                <a href={platformUrl()}>
-                  Start Training <span aria-hidden="true">↗</span>
+                <a href="/waitlist">
+                  Join the Pilot Waitlist <span aria-hidden="true">↗</span>
                 </a>
               </Button>
               <Button asChild variant="secondary">
-                <a href="/about">
-                  Discover SAQR <span aria-hidden="true">→</span>
+                <a href="/demo">
+                  Request a Demo <span aria-hidden="true">→</span>
                 </a>
               </Button>
             </div>
@@ -48,18 +54,7 @@ export default function Home() {
               WHAT’S NEXT.
             </p>
           </div>
-          <div className="hero-art">
-            <FieldVisual />
-            <div className="hero-art-caption">
-              <div>
-                <strong>A different view of agriculture.</strong>
-                <p className="muted">The first SAQR specialization</p>
-              </div>
-              <span className="text-saqr text-2xl" aria-hidden="true">
-                ↗
-              </span>
-            </div>
-          </div>
+          <DroneHero />
         </section>
       </div>
       <div className="container strip">
@@ -73,15 +68,59 @@ export default function Home() {
       <section className="section container">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">OUR MISSION</p>
+            <p className="eyebrow">THE CHALLENGE OF DRONE TRAINING</p>
             <h2>
-              More than flying.
-              <br />A foundation for your future.
+              A first mistake shouldn’t
+              <br />
+              end a future in flight.
             </h2>
           </div>
           <p className="muted">
-            We’re connecting professional drone education, structured learning
-            and technology with the industries that need them.
+            Industrial aircraft demand more than basic flying skills. Learners
+            need room to practice without putting equipment, budgets or field
+            operations at risk.
+          </p>
+        </div>
+        <div className="grid-3">
+          {[
+            [
+              '01 / EQUIPMENT RISK',
+              'Protect the aircraft. Free the learner.',
+              'A heavy-lift drone is a significant investment. Virtual practice creates room to learn from mistakes before working with real equipment.',
+            ],
+            [
+              '02 / PRACTICAL EXPERIENCE',
+              'Turn knowledge into control skills.',
+              'Academic understanding needs hands-on repetition. Simulation-led training helps bridge the gap between knowing how an aircraft works and managing a demanding mission.',
+            ],
+            [
+              '03 / TRAINING CAPACITY',
+              'Make more room for practice.',
+              'Weather windows, battery charging and shared aircraft limit field time. Virtual exercises can give learners more opportunities to rehearse independently.',
+            ],
+          ].map(([number, title, text]) => (
+            <Card key={number} className="feature-card">
+              <p className="feature-number">{number}</p>
+              <h3>{title}</h3>
+              <p className="muted">{text}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+      <section className="section container">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">OUR MISSION</p>
+            <h2>
+              Room to learn.
+              <br />
+              Confidence to go further.
+            </h2>
+          </div>
+          <p className="muted">
+            Learning demanding flight skills starts with the freedom to make
+            mistakes. Our vision brings repeatable simulation practice and
+            industry-focused education into one learning journey.
           </p>
         </div>
         <div className="grid-3">
@@ -100,13 +139,13 @@ export default function Home() {
           <div>
             <p className="eyebrow">OUR FIRST HORIZON / AGRICULTURE</p>
             <h2>
-              Better perspective.
+              From flight lines.
               <br />
-              Smarter possibilities.
+              To field insight.
             </h2>
             <p className="muted">
-              Agriculture offers a clear purpose for drone skills: understanding
-              land, observing crops and supporting precision decisions.
+              Agriculture offers a clear purpose for drone skills: planning
+              missions, understanding crop health and making precise decisions.
             </p>
             <p className="muted">
               Our first training track introduces these applications. SAQR is a
@@ -117,8 +156,8 @@ export default function Home() {
               {[
                 'Crop monitoring',
                 'Field mapping',
-                'Multispectral imaging',
-                'Field inspection',
+                'Multispectral fundamentals',
+                'Terrain awareness',
                 'Precision agriculture',
                 'Spraying concepts',
               ].map((item) => (
@@ -132,34 +171,39 @@ export default function Home() {
         </div>
       </section>
       <section className="section container">
-        <p className="eyebrow">YOUR TRAINING JOURNEY</p>
-        <h2>A clear path. A higher standard.</h2>
+        <p className="eyebrow">HOW SAQR WORKS / FOUR STAGES</p>
+        <h2>
+          From foundational knowledge
+          <br />
+          to operational readiness.
+        </h2>
         <p className="muted">
-          The journey we’re building, one milestone at a time.
+          Simulation prepares learners for real flight. The roadmap connects
+          theory, repeated practice, supervised field experience and
+          professional progression.
         </p>
         <div className="journey">
-          {[
-            'Learn',
-            'Practice',
-            'Assess',
-            'Certify',
-            'Build your Pilot Profile',
-          ].map((step, index) => (
-            <div className="journey-step" key={step}>
+          {trainingStages.map((step, index) => (
+            <div className="journey-step" key={step.title}>
               <span>0{index + 1} /</span>
-              <h3>{step}</h3>
+              <h3>{step.title}</h3>
+              <p className="stage-description muted">{step.description}</p>
+              <span className="stage-status">{step.status}</span>
             </div>
           ))}
         </div>
         <p className="legal-note">
-          Learning activities, assessments and SAQR course completion
-          certificates are planned for the next phases. Certificates will not
-          replace regulatory licenses.
+          Roadmap: full lessons, simulator integration, supervised field
+          training and credentials are being developed in phases. SAQR course
+          completion certificates will not replace regulatory flight licenses.
         </p>
+        <a className="text-link" href="/training">
+          Explore the full training approach →
+        </a>
       </section>
       <section className="container section split">
         <div>
-          <p className="eyebrow">YOUR LEARNING FLIGHT DECK</p>
+          <p className="eyebrow">THE PLATFORM / A FIRST LOOK</p>
           <h2>
             One place to see
             <br />
@@ -235,6 +279,97 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <section className="container section">
+        <div className="cup-teaser dark-surface">
+          <div>
+            <p className="eyebrow">SAQR CUP / PLANNED 2026 EDITION</p>
+            <h2>
+              Practice. Compete.
+              <br />
+              Grow beyond the simulator.
+            </h2>
+            <p className="muted">
+              A simulation-based challenge designed to discover Morocco’s next
+              generation of agricultural drone pilots. Register your interest
+              and hear when the official rules are ready.
+            </p>
+            <p className="muted">
+              The launch plan includes student beta participation, a sponsored
+              certification opportunity valued at 5,000+ DH and connections with
+              agricultural operators. Access, rewards and partners will be
+              confirmed with the official rules.
+            </p>
+          </div>
+          <Button asChild>
+            <a href="/saqr-cup">Discover the SAQR Cup ↗</a>
+          </Button>
+        </div>
+      </section>
+      <section className="container section institutional-section">
+        <div>
+          <p className="eyebrow">FOR VOCATIONAL & ENTERPRISE TRAINING</p>
+          <h2>
+            Build a flight laboratory
+            <br />
+            around your learners.
+          </h2>
+          <p className="muted">
+            For CMCs, ITSAs, agricultural universities and commercial operators,
+            SAQR’s institutional vision brings repeatable simulator practice
+            into existing computer labs. Explore curriculum alignment, classroom
+            capacity and instructor evaluation tools with the team.
+          </p>
+          <Button asChild variant="secondary">
+            <a href="/demo">Request an Institutional Demo →</a>
+          </Button>
+        </div>
+        <div className="institutional-details">
+          <p>
+            <strong>Practice independently</strong>
+            <span>
+              Plan for more learners to rehearse without sharing one aircraft.
+            </span>
+          </p>
+          <p>
+            <strong>Prepare for local missions</strong>
+            <span>
+              Connect flight scenarios with agricultural terrain and operating
+              contexts.
+            </span>
+          </p>
+          <p>
+            <strong>Follow learner progression</strong>
+            <span>
+              Instructor monitoring and telemetry are part of the development
+              roadmap.
+            </span>
+          </p>
+        </div>
+      </section>
+      <section className="container section audience-ctas">
+        <Card>
+          <p className="eyebrow">FOR ASPIRING PILOTS</p>
+          <h2>Your journey starts here.</h2>
+          <p className="muted">
+            Tell us what you want to learn and the setup you use. Join the early
+            access community as the simulator takes shape.
+          </p>
+          <Button asChild>
+            <a href="/waitlist">Join the Pilot Waitlist ↗</a>
+          </Button>
+        </Card>
+        <Card>
+          <p className="eyebrow">FOR INSTITUTIONS & OPERATORS</p>
+          <h2>Build your next training chapter.</h2>
+          <p className="muted">
+            Explore simulation-led education for your learners. Share your
+            objectives and start a conversation about institutional evaluation.
+          </p>
+          <Button asChild variant="secondary">
+            <a href="/demo">Request an Institutional Demo →</a>
+          </Button>
+        </Card>
+      </section>
       <section className="section cta-band dark-surface">
         <div className="container">
           <p className="eyebrow">YOUR FUTURE TAKES FLIGHT HERE</p>
@@ -244,10 +379,11 @@ export default function Home() {
             Build with purpose.
           </h2>
           <p className="muted">
-            Your professional drone journey starts with the first step.
+            For aspiring pilots, educators and agricultural operators ready to
+            explore a new perspective.
           </p>
           <Button asChild>
-            <a href={platformUrl()}>Start Your Pilot Journey ↗</a>
+            <a href="/waitlist">Start Your Pilot Journey ↗</a>
           </Button>
         </div>
       </section>
