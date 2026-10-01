@@ -1,10 +1,16 @@
 import { Card, PageHeader } from '@saqr/ui';
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'Discover SAQR’s purpose: making drone training more accessible through safe practice, repetition and preparation for real operations.',
+};
 export default function About() {
   return (
     <div className="container section">
       <PageHeader
         eyebrow="OUR PURPOSE / ABOUT SAQR"
-        title="Make room for mistakes. Make room for mastery."
+        title="Less fear of failure. More freedom to master flight."
         description="We’re building a place where aspiring pilots can learn demanding skills with less fear and more freedom to practice."
       />
       <div className="prose">

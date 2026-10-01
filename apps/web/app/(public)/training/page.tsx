@@ -1,7 +1,13 @@
 import { Button, CourseCard, PageHeader } from '@saqr/ui';
+import type { Metadata } from 'next';
 import { demoCourse } from '@saqr/types';
 import { platformUrl } from '../../../lib/config';
 import { simulationCurriculum, trainingStages } from '../../../lib/messaging';
+export const metadata: Metadata = {
+  title: 'Training methodology',
+  description:
+    'Follow SAQR’s four-stage roadmap from aviation fundamentals and simulator practice to supervised field validation and professional progression.',
+};
 export default function Training() {
   return (
     <div className="container section">

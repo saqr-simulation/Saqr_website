@@ -1,14 +1,25 @@
-import { Button, Card, FieldVisual, PageHeader } from '@saqr/ui';
+import { Button, Card, PageHeader } from '@saqr/ui';
+import {
+  AgricultureMission,
+  FieldMission,
+  MissionCompetencies,
+} from '../../../components/field-mission';
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Agricultural drone training',
+  description:
+    'Explore SAQR’s agriculture training track: crop monitoring, field mapping, terrain awareness, payload handling and emergency preparation.',
+};
 export default function Agriculture() {
   return (
     <div className="container section">
       <PageHeader
         eyebrow="AGRICULTURE / OUR FIRST SPECIALIZATION"
-        title="Understand the aircraft. Understand the field."
+        title="Agricultural flight. Grounded in purpose."
         description="Connect digital flight practice with the realities of agricultural operations, from observing crop health to managing terrain and payloads."
       />
-      <div className="split">
-        <FieldVisual />
+      <AgricultureMission>
+        <FieldMission />
         <div>
           <h2>
             From aerial perspective
@@ -20,18 +31,16 @@ export default function Agriculture() {
             mission preparation and safe operating principles. Learners will
             explore how each topic connects to agricultural decision-making.
           </p>
-          <div className="use-cases">
-            {[
+          <MissionCompetencies
+            items={[
               'Crop monitoring',
               'Mission planning & mapping',
               'Multispectral & NDVI basics',
               'Terrain & wind awareness',
               'Precision agriculture',
               'Payload & spraying concepts',
-            ].map((x) => (
-              <span key={x}>{x}</span>
-            ))}
-          </div>
+            ]}
+          />
           <p className="legal-note">
             These are planned training topics. SAQR does not currently provide
             field operations, flight licenses or spraying services.
@@ -40,7 +49,7 @@ export default function Agriculture() {
             <a href="/waitlist">Join the agricultural training waitlist ↗</a>
           </Button>
         </div>
-      </div>
+      </AgricultureMission>
       <section className="content-block">
         <p className="eyebrow">CORE AGRICULTURAL COMPETENCIES</p>
         <h2>Every flight has a field purpose.</h2>

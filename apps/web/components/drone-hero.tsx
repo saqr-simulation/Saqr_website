@@ -35,7 +35,7 @@ export function DroneHero() {
         const key = new T.DirectionalLight(0xffffff, 4);
         key.position.set(3, 6, 4);
         scene.add(key);
-        const rim = new T.DirectionalLight(0x54e5ba, 3);
+        const rim = new T.DirectionalLight(0x4688c5, 3);
         rim.position.set(-4, 2, -3);
         scene.add(rim);
         const drone = new T.Group();
@@ -51,7 +51,7 @@ export function DroneHero() {
           roughness: 0.28,
         });
         const green = new T.MeshStandardMaterial({
-          color: 0x25d0a0,
+          color: 0x4688c5,
           metalness: 0.3,
           roughness: 0.3,
         });
@@ -315,7 +315,7 @@ export function DroneHero() {
           >
             <g
               fill="none"
-              stroke="#77c7b3"
+              stroke="#bfe3f0"
               strokeWidth="12"
               strokeLinecap="round"
             >
@@ -329,7 +329,7 @@ export function DroneHero() {
               <ellipse cx="380" cy="240" rx="70" ry="12" />
               <rect x="205" y="130" width="90" height="75" rx="20" />
             </g>
-            <path fill="#27cca2" d="M240 135h20v65h-20z" />
+            <path fill="#4688c5" d="M240 135h20v65h-20z" />
           </svg>
         )}
       </div>

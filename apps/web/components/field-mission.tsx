@@ -1,22 +1,105 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactNode,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 
 const route =
   'M90 320V110Q90 90 110 90H150Q170 90 170 110V300Q170 320 190 320H230Q250 320 250 300V110Q250 90 270 90H310Q330 90 330 110V300Q330 320 350 320H390Q410 320 410 300V90';
+const stages = [
+  'Mission Planning',
+  'Takeoff',
+  'Field Mapping',
+  'Crop Scan',
+  'Analysis Complete',
+];
+const stageAt = (time: number) =>
+  time < 1.2 ? 0 : time < 2.4 ? 1 : time < 5 ? 2 : time < 12 ? 3 : 4;
+const MissionContext = createContext<{
+  time: number;
+  setTime: Dispatch<SetStateAction<number>>;
+} | null>(null);
+
+export function AgricultureMission({
+  children,
+  className = 'split',
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const [time, setTime] = useState(0);
+  return (
+    <MissionContext.Provider value={{ time, setTime }}>
+      <div className={className}>{children}</div>
+    </MissionContext.Provider>
+  );
+}
+
+export function MissionCompetencies({ items }: { items: string[] }) {
+  const mission = useContext(MissionContext);
+  const stage = stageAt(mission?.time ?? 0);
+  return (
+    <div className="use-cases mission-competencies">
+      {items.map((item) => {
+        const text = item.toLowerCase();
+        const active =
+          stage === 0 || stage === 2
+            ? /mapping|planning/.test(text)
+            : stage === 1
+              ? /terrain|wind/.test(text)
+              : stage === 3
+                ? /crop monitoring|multispectral/.test(text)
+                : /precision agriculture/.test(text);
+        return (
+          <span
+            key={item}
+            className={active ? 'mission-competency-active' : undefined}
+          >
+            {item}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
 
 export function FieldMission() {
   const [mode, setMode] = useState<'mapping' | 'monitoring'>('mapping');
   const scene = useRef<SVGSVGElement>(null);
   const id = useId().replace(/:/g, '');
+  const mission = useContext(MissionContext);
+  const setTime = mission?.setTime;
+  const time = mission?.time ?? 0;
+  const stage = stageAt(time);
+  const progress = Math.round(
+    Math.max(0, Math.min(1, (time - 2.4) / 9.6)) * 100,
+  );
 
   useEffect(() => {
     const svg = scene.current!;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    const sample = () => setTime?.(svg.getCurrentTime() % 14);
     const update = () => {
-      if (motion.matches || !visible || document.hidden) svg.pauseAnimations();
-      else svg.unpauseAnimations();
+      clearInterval(timer);
+      if (motion.matches) {
+        svg.pauseAnimations();
+        svg.setCurrentTime(12.4);
+        sample();
+      } else if (!visible || document.hidden) svg.pauseAnimations();
+      else {
+        svg.unpauseAnimations();
+        timer = setInterval(sample, 200);
+      }
     };
     const observer = new IntersectionObserver(([entry]) => {
       visible = Boolean(entry?.isIntersecting);
@@ -27,11 +110,12 @@ export function FieldMission() {
     document.addEventListener('visibilitychange', update);
     update();
     return () => {
+      clearInterval(timer);
       observer.disconnect();
       motion.removeEventListener('change', update);
       document.removeEventListener('visibilitychange', update);
     };
-  }, []);
+  }, [setTime]);
 
   return (
     <div className="field-mission">
@@ -39,6 +123,7 @@ export function FieldMission() {
         <span>
           <i className="status-dot" /> MISSION PREVIEW
         </span>
+        <span className="mission-stage-label">{stages[stage]}</span>
       </div>
       <div
         className="mission-modes"
@@ -101,41 +186,41 @@ export function FieldMission() {
           strokeWidth="10"
           opacity=".55"
         />
-        {mode === 'monitoring' && (
-          <g key="health">
-            {Array.from({ length: 20 }, (_, index) => {
-              const column = index % 5;
-              const row = Math.floor(index / 5);
-              const scanOrder = column * 4 + (column % 2 === 0 ? 3 - row : row);
-              return (
-                <rect
-                  key={index}
-                  x={57 + (index % 5) * 78}
-                  y={65 + Math.floor(index / 5) * 68}
-                  width="72"
-                  height="60"
-                  rx="5"
-                  fill={
-                    index === 8 || index === 13
+        <g>
+          {Array.from({ length: 20 }, (_, index) => {
+            const column = index % 5;
+            const row = Math.floor(index / 5);
+            const scanOrder = column * 4 + (column % 2 === 0 ? 3 - row : row);
+            return (
+              <rect
+                key={index}
+                x={57 + (index % 5) * 78}
+                y={65 + Math.floor(index / 5) * 68}
+                width="72"
+                height="60"
+                rx="5"
+                fill={
+                  mode === 'mapping'
+                    ? '#bfe3f0'
+                    : index === 8 || index === 13
                       ? '#efb65b'
                       : index % 4 === 0
                         ? '#a8d475'
                         : '#4de0a1'
-                  }
-                  opacity=".38"
-                >
-                  <animate
-                    attributeName="opacity"
-                    values=".08;.08;.48;.48;.08"
-                    keyTimes={`0;${0.02 + scanOrder * 0.04};${0.07 + scanOrder * 0.04};.94;1`}
-                    dur="18s"
-                    repeatCount="indefinite"
-                  />
-                </rect>
-              );
-            })}
-          </g>
-        )}
+                }
+                opacity="0"
+              >
+                <animate
+                  attributeName="opacity"
+                  values="0;0;.42;.42;0"
+                  keyTimes={`0;${(2.4 + scanOrder * 0.46) / 14};${(2.8 + scanOrder * 0.46) / 14};.93;1`}
+                  dur="14s"
+                  repeatCount="indefinite"
+                />
+              </rect>
+            );
+          })}
+        </g>
         <rect
           x="42"
           y="52"
@@ -165,30 +250,40 @@ export function FieldMission() {
         >
           <animate
             attributeName="stroke-dashoffset"
-            values="100;0;0;100"
-            keyTimes="0;.9;.96;1"
-            dur="18s"
+            values="100;100;0;0;100"
+            keyTimes="0;.1714;.8571;.93;1"
+            dur="14s"
             repeatCount="indefinite"
           />
         </path>
         <g>
           <animate
             attributeName="opacity"
-            values="1;1;0;0;1"
-            keyTimes="0;.9;.94;.99;1"
-            dur="18s"
+            values="0;0;1;1;0;0"
+            keyTimes="0;.0857;.12;.9;.96;1"
+            dur="14s"
             repeatCount="indefinite"
           />
           <animateMotion
-            path={route}
-            dur="18s"
-            keyPoints="0;1;1;0"
-            keyTimes="0;.9;.96;1"
-            calcMode="linear"
+            path={`M30 360L90 320${route.slice('M90 320'.length)}`}
+            dur="14s"
+            keyPoints="0;0;.05;1;1"
+            keyTimes="0;.0857;.1714;.8571;1"
+            calcMode="spline"
+            keySplines="0 0 1 1;.4 0 .2 1;0 0 1 1;0 0 1 1"
             repeatCount="indefinite"
           />
-          <circle r="43" fill={`url(#${id}-scan)`} />
-          <circle r="27" fill="none" stroke="#8bffcf" strokeOpacity=".35" />
+          <g>
+            <animate
+              attributeName="opacity"
+              values="0;0;1;1;0"
+              keyTimes="0;.1714;.2;.8571;1"
+              dur="14s"
+              repeatCount="indefinite"
+            />
+            <circle r="43" fill={`url(#${id}-scan)`} />
+            <circle r="27" fill="none" stroke="#8bffcf" strokeOpacity=".35" />
+          </g>
           <g stroke="#effff6" strokeWidth="3" strokeLinecap="round">
             <path d="M-12 -12L12 12M-12 12L12 -12" />
             {[-12, 12].flatMap((x) =>
@@ -213,6 +308,55 @@ export function FieldMission() {
           SAQR / AGRICULTURAL OPERATIONS
         </text>
       </svg>
+      <div
+        className="mission-telemetry"
+        aria-label="Illustrative mission telemetry"
+      >
+        <span>
+          ALTITUDE
+          <strong>
+            {stage === 0
+              ? '0'
+              : stage === 1
+                ? Math.round((time - 1.2) * 25)
+                : '30'}{' '}
+            m
+          </strong>
+        </span>
+        <span>
+          MISSION<strong>{progress}%</strong>
+        </span>
+        <span>
+          WIND
+          <strong>
+            {stage < 2 ? '2.4' : (2.4 + Math.sin(time) * 0.3).toFixed(1)} m/s
+          </strong>
+        </span>
+        <span>
+          NDVI
+          <strong>
+            {stage < 3 ? '—' : (0.72 + Math.sin(time * 0.7) * 0.04).toFixed(2)}
+          </strong>
+        </span>
+      </div>
+      <ol className="mission-stages" aria-label="Mission sequence">
+        {stages.map((label, index) => (
+          <li
+            key={label}
+            className={
+              index === stage
+                ? 'is-current'
+                : index < stage
+                  ? 'is-complete'
+                  : undefined
+            }
+            aria-current={index === stage ? 'step' : undefined}
+          >
+            <span>{index + 1}</span>
+            {label}
+          </li>
+        ))}
+      </ol>
       <div className="mission-caption">
         <span>
           {mode === 'mapping'
@@ -223,7 +367,9 @@ export function FieldMission() {
           {mode === 'mapping' ? '↗ Flight path' : '● Healthy   ◐ Review'}
         </span>
       </div>
-      <p className="mission-disclaimer">Illustrative training scenario</p>
+      <p className="mission-disclaimer">
+        Illustrative training scenario · simulated readings
+      </p>
     </div>
   );
 }

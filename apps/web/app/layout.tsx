@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     template: '%s | SAQR',
   },
   description:
-    'Train for the future of professional drone operations. Agriculture first.',
+    'Crash here, succeed there. Explore SAQR’s drone simulation and training platform, built in Morocco with agriculture as its first specialization.',
 };
 export default function Layout({
   children,

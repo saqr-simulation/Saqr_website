@@ -1,5 +1,9 @@
 import { Badge, Button, Card, Progress } from '@saqr/ui';
-import { FieldMission } from '../../components/field-mission';
+import {
+  AgricultureMission,
+  FieldMission,
+  MissionCompetencies,
+} from '../../components/field-mission';
 import { DroneHero } from '../../components/drone-hero';
 import { platformUrl } from '../../lib/config';
 import { trainingStages } from '../../lib/messaging';
@@ -46,13 +50,13 @@ export default function Home() {
               </Button>
               <Button asChild variant="secondary">
                 <a href="/demo">
-                  Request a Demo <span aria-hidden="true">→</span>
+                  Request Institutional Demo <span aria-hidden="true">→</span>
                 </a>
               </Button>
             </div>
             <p className="hero-footnote">
-              <span className="status-dot" /> AGRICULTURE FIRST. BUILT FOR
-              WHAT’S NEXT.
+              <span className="status-dot" /> AGRICULTURE FIRST. BUILT IN
+              MOROCCO.
             </p>
           </div>
           <DroneHero />
@@ -135,7 +139,7 @@ export default function Home() {
         </div>
       </section>
       <section className="agriculture-section">
-        <div className="section container split">
+        <AgricultureMission className="section container split">
           <FieldMission />
           <div>
             <p className="eyebrow">OUR FIRST HORIZON / AGRICULTURE</p>
@@ -153,23 +157,21 @@ export default function Home() {
               training platform; these are learning topics, not services we
               currently operate.
             </p>
-            <div className="use-cases">
-              {[
+            <MissionCompetencies
+              items={[
                 'Crop monitoring',
                 'Field mapping',
                 'Multispectral fundamentals',
                 'Terrain awareness',
                 'Precision agriculture',
                 'Spraying concepts',
-              ].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
+              ]}
+            />
             <a href="/agriculture" className="text-link">
               Explore agriculture training ↗
             </a>
           </div>
-        </div>
+        </AgricultureMission>
       </section>
       <section className="section container">
         <p className="eyebrow">HOW SAQR WORKS / FOUR STAGES</p>

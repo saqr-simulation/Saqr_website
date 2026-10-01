@@ -44,9 +44,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <a className="announcement-band" href="/saqr-cup">
         <span className="announcement-badge">COMING UP</span>
         <span>
-          SAQR Cup 2026 · A new challenge for Morocco’s aspiring drone pilots.
+          SAQR Cup 2026 · Practice for a sponsored pilot certification
+          opportunity worth 5,000+ DH.
         </span>
-        <strong>Explore the Cup →</strong>
+        <strong>Pre-register →</strong>
       </a>
       <div className="site-header-band dark-surface">
         <header className="site-header container">
