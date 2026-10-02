@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { sitePath } from '../lib/site-path';
 
-/** A locally constructed agricultural aircraft: no external model or texture requests. */
+/** Repository-owned agricultural drone with accessible rotation controls. */
 export function DroneHero() {
   const host = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
@@ -17,8 +18,8 @@ export function DroneHero() {
       observer.disconnect();
       try {
         const T = await import('three');
-        const { RoundedBoxGeometry } =
-          await import('three/addons/geometries/RoundedBoxGeometry.js');
+        const { GLTFLoader } =
+          await import('three/addons/loaders/GLTFLoader.js');
         if (disposed) return;
         const renderer = new T.WebGLRenderer({
           alpha: true,
@@ -40,107 +41,49 @@ export function DroneHero() {
         scene.add(rim);
         const drone = new T.Group();
         scene.add(drone);
-        const carbon = new T.MeshStandardMaterial({
-          color: 0x19282d,
-          metalness: 0.65,
-          roughness: 0.32,
-        });
-        const shell = new T.MeshStandardMaterial({
-          color: 0xe5eae5,
-          metalness: 0.35,
-          roughness: 0.28,
-        });
-        const green = new T.MeshStandardMaterial({
-          color: 0x4688c5,
-          metalness: 0.3,
-          roughness: 0.3,
-        });
-        const tank = new T.MeshStandardMaterial({
-          color: 0x9eafad,
-          metalness: 0.15,
-          roughness: 0.5,
-        });
-        function box(
-          w: number,
-          h: number,
-          d: number,
-          x: number,
-          y: number,
-          z: number,
-          material = carbon,
-        ) {
-          const mesh = new T.Mesh(
-            new RoundedBoxGeometry(w, h, d, 2, Math.min(w, h, d) * 0.15),
-            material,
-          );
-          mesh.position.set(x, y, z);
-          drone.add(mesh);
-          return mesh;
-        }
-        function rod(
-          a: number[],
-          b: number[],
-          radius = 0.055,
-          material = carbon,
-        ) {
-          const start = new T.Vector3(...a),
-            end = new T.Vector3(...b);
-          const mesh = new T.Mesh(
-            new T.CylinderGeometry(radius, radius, start.distanceTo(end), 12),
-            material,
-          );
-          mesh.position.copy(start).add(end).multiplyScalar(0.5);
-          mesh.quaternion.setFromUnitVectors(
-            new T.Vector3(0, 1, 0),
-            end.sub(start).normalize(),
-          );
-          drone.add(mesh);
-        }
-        const body = box(1.1, 0.38, 1.35, 0, 0.2, 0, shell);
-        body.rotation.z = 0.04;
-        box(0.72, 0.09, 0.9, 0, 0.44, 0, carbon);
-        box(0.18, 0.1, 0.92, 0, 0.5, 0, green);
-        box(0.82, 0.62, 0.88, 0, -0.3, 0, tank);
-        box(0.25, 0.16, 0.1, 0, 0.12, 0.72, carbon);
-        const lens = new T.Mesh(new T.SphereGeometry(0.08, 16, 12), green);
-        lens.position.set(0, 0.12, 0.79);
-        drone.add(lens);
-        const rotors: import('three').Group[] = [];
-        for (const x of [-1, 1])
-          for (const z of [-1, 1]) {
-            const px = x * 1.65,
-              pz = z * 1.45;
-            rod([x * 0.42, 0.2, z * 0.45], [px, 0.32, pz], 0.095);
-            rod([x * 0.4, 0.05, z * 0.5], [px, 0.26, pz], 0.035, tank);
-            const motor = new T.Mesh(
-              new T.CylinderGeometry(0.17, 0.14, 0.26, 20),
-              carbon,
-            );
-            motor.position.set(px, 0.4, pz);
-            drone.add(motor);
-            const rotor = new T.Group();
-            rotor.position.set(px, 0.57, pz);
-            for (const angle of [0, Math.PI]) {
-              const blade = new T.Mesh(
-                new T.BoxGeometry(0.86, 0.025, 0.12),
-                carbon,
-              );
-              blade.position.x = Math.cos(angle) * 0.42;
-              blade.rotation.y = angle + 0.12;
-              rotor.add(blade);
+        const disposeModel = () => {
+          const materials = new Set<import('three').Material>();
+          const textures = new Set<import('three').Texture>();
+          drone.traverse((object) => {
+            if (!(object instanceof T.Mesh)) return;
+            object.geometry.dispose();
+            for (const material of Array.isArray(object.material)
+              ? object.material
+              : [object.material]) {
+              materials.add(material);
+              for (const value of Object.values(material)) {
+                if (value instanceof T.Texture) textures.add(value);
+              }
             }
-            const hub = new T.Mesh(new T.SphereGeometry(0.1, 12, 8), shell);
-            rotor.add(hub);
-            rotor.rotation.y = x * z;
-            drone.add(rotor);
-            rotors.push(rotor);
-            rod([x * 0.5, -0.05, z * 0.4], [x * 0.85, -0.92, z * 0.7], 0.045);
-          }
-        for (const x of [-0.85, 0.85]) {
-          rod([x, -0.92, -1], [x, -0.92, 1], 0.055);
-          rod([x, -0.55, -0.4], [x * 1.6, -0.55, -0.4], 0.035, tank);
-          box(0.09, 0.12, 0.09, x * 1.6, -0.63, -0.4, green);
+          });
+          textures.forEach((texture) => {
+            texture.dispose();
+            if (
+              typeof ImageBitmap !== 'undefined' &&
+              texture.image instanceof ImageBitmap
+            )
+              texture.image.close();
+          });
+          materials.forEach((material) => material.dispose());
+        };
+        teardown = () => {
+          disposeModel();
+          renderer.dispose();
+        };
+        const gltf = await new GLTFLoader().loadAsync(
+          sitePath('/models/saqr-agri-drone.glb'),
+        );
+        drone.add(gltf.scene);
+        if (disposed) {
+          teardown();
+          return;
         }
+        // Center and normalize the asset without altering its original materials.
+        const bounds = new T.Box3().setFromObject(gltf.scene);
+        const size = bounds.getSize(new T.Vector3());
+        const scale = 4.5 / Math.max(size.x, size.y, size.z);
+        gltf.scene.position.sub(bounds.getCenter(new T.Vector3()));
+        drone.scale.setScalar(scale);
         element.appendChild(renderer.domElement);
         renderer.domElement.setAttribute('aria-hidden', 'true');
         let visible = true,
@@ -168,9 +111,6 @@ export function DroneHero() {
             drone.position.y = Math.sin(now * 0.001) * 0.08;
             drone.rotation.y += (yaw - drone.rotation.y) * 0.15;
             drone.rotation.x += (pitch - drone.rotation.x) * 0.15;
-            rotors.forEach((rotor, index) => {
-              rotor.rotation.y += index % 2 ? 0.45 : -0.45;
-            });
             draw();
           }
           frame = requestAnimationFrame(tick);
@@ -270,16 +210,12 @@ export function DroneHero() {
             'webglcontextlost',
             contextLost,
           );
-          scene.traverse((object) => {
-            if (object instanceof T.Mesh) object.geometry.dispose();
-          });
-          [carbon, shell, green, tank].forEach((material) =>
-            material.dispose(),
-          );
+          disposeModel();
           renderer.dispose();
           renderer.domElement.remove();
         };
       } catch {
+        teardown();
         if (!disposed) setFailed(true);
       }
     });
