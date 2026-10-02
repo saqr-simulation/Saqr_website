@@ -8,6 +8,8 @@ export function DroneHero() {
   const host = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const toggleAnimation = useRef<() => void>(() => {});
 
   useEffect(() => {
     const element = host.current!;
@@ -94,6 +96,8 @@ export function DroneHero() {
         let pitch = 0;
         let drag: { id: number; x: number; y: number } | null = null;
         const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let animated = !motion.matches;
+        setPlaying(animated);
         const draw = () => renderer.render(scene, camera);
         const resize = () => {
           renderer.setSize(element.clientWidth, element.clientHeight, false);
@@ -105,10 +109,12 @@ export function DroneHero() {
         resizeObserver.observe(element);
         const tick = (now: number) => {
           frame = 0;
-          if (!visible || document.hidden || stopped || motion.matches) return;
+          if (!visible || document.hidden || stopped || !animated) return;
           if (now - last >= 33) {
+            const delta = last ? Math.min((now - last) / 1000, 0.1) : 0;
             last = now;
-            drone.position.y = Math.sin(now * 0.001) * 0.08;
+            if (!drag) yaw += delta * 0.22;
+            drone.position.y = Math.sin(now * 0.0015) * 0.18;
             drone.rotation.y += (yaw - drone.rotation.y) * 0.15;
             drone.rotation.x += (pitch - drone.rotation.x) * 0.15;
             draw();
@@ -116,7 +122,10 @@ export function DroneHero() {
           frame = requestAnimationFrame(tick);
         };
         const resume = () => {
-          if (!frame) frame = requestAnimationFrame(tick);
+          if (!frame) {
+            last = 0;
+            frame = requestAnimationFrame(tick);
+          }
         };
         const visibility = new IntersectionObserver(([item]) => {
           visible = Boolean(item?.isIntersecting);
@@ -126,19 +135,25 @@ export function DroneHero() {
         const onVisibility = () => {
           if (!document.hidden) resume();
         };
-        const onMotion = () => {
-          if (motion.matches) {
+        const setAnimation = (enabled: boolean) => {
+          animated = enabled;
+          setPlaying(enabled);
+          if (enabled) resume();
+          else {
+            cancelAnimationFrame(frame);
+            frame = 0;
             drone.position.y = 0;
             draw();
-          } else resume();
+          }
         };
+        toggleAnimation.current = () => setAnimation(!animated);
+        const onMotion = () => setAnimation(!motion.matches);
         const rotate = (horizontal: number, vertical: number) => {
           yaw += horizontal;
           pitch = Math.max(-0.6, Math.min(0.6, pitch + vertical));
-          if (stopped || motion.matches) {
-            drone.rotation.set(pitch, yaw, 0);
-            draw();
-          }
+          drone.rotation.set(pitch, yaw, 0);
+          draw();
+          if (animated) resume();
         };
         const down = (event: PointerEvent) => {
           if (!event.isPrimary || event.button !== 0 || drag) return;
@@ -194,6 +209,7 @@ export function DroneHero() {
         setReady(true);
         resume();
         teardown = () => {
+          toggleAnimation.current = () => {};
           cancelAnimationFrame(frame);
           resizeObserver.disconnect();
           visibility.disconnect();
@@ -278,6 +294,15 @@ export function DroneHero() {
               : 'Aircraft concept · drag to rotate'}
           </p>
         </div>
+        {ready && !failed && (
+          <button
+            type="button"
+            className="button"
+            onClick={() => toggleAnimation.current()}
+          >
+            {playing ? 'Pause animation' : 'Play animation'}
+          </button>
+        )}
       </div>
     </div>
   );
