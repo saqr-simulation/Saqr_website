@@ -72,6 +72,7 @@ Build, lint, strict TypeScript and authorization checks have passed. Both Next.j
 ## Documentation
 
 - [Architecture and decisions](docs/architecture.md)
+- [Deploy only the public website to GitHub Pages](docs/github-pages.md)
 - [Local development and authentication setup](docs/local-development.md)
 - [Environment variables](docs/environment.md)
 - [Verification and remaining work](docs/verification.md)

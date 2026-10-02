@@ -1,6 +1,8 @@
+import { sitePath } from '../lib/site-path';
 import { Button, Logo, Navigation } from '@saqr/ui';
+import { platformAvailable } from '../lib/site-path';
 import { platformUrl } from '../lib/config';
-const links = [
+const links: [string, string][] = [
   ['Home', '/'],
   ['About', '/about'],
   ['Training', '/training'],
@@ -9,7 +11,7 @@ const links = [
   ['Why SAQR', '/#why-saqr'],
   ['Contact', '/contact'],
 ];
-const footerLinks = [
+const footerLinks: [string, string][] = [
   ['Agriculture', '/agriculture'],
   ['Training', '/training'],
   ['The SAQR Cup 2026', '/saqr-cup'],
@@ -21,15 +23,17 @@ function Links({ includeActions = false }: { includeActions?: boolean }) {
   return (
     <Navigation>
       {links.map(([label, href]) => (
-        <a key={href} href={href}>
+        <a key={href} href={sitePath(href)}>
           {label}
         </a>
       ))}
       {includeActions && (
         <>
-          <a href="/demo">Request Demo</a>
-          <a href="/waitlist">Join Waitlist</a>
-          <a href={platformUrl('/login')}>Pilot Login ↗</a>
+          <a href={sitePath('/demo')}>Request Demo</a>
+          <a href={sitePath('/waitlist')}>Join Waitlist</a>
+          {platformAvailable && (
+            <a href={platformUrl('/login')}>Pilot Login ↗</a>
+          )}
         </>
       )}
     </Navigation>
@@ -41,7 +45,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <a className="announcement-band" href="/saqr-cup">
+      <a className="announcement-band" href={sitePath('/saqr-cup')}>
         <span className="announcement-badge">COMING UP</span>
         <span>
           SAQR Cup 2026 · Practice for a sponsored pilot certification
@@ -51,19 +55,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </a>
       <div className="site-header-band dark-surface">
         <header className="site-header container">
-          <a href="/" aria-label="SAQR home">
+          <a href={sitePath('/')} aria-label="SAQR home">
             <Logo />
           </a>
           <Links />
           <div className="header-actions">
-            <a className="login-link" href={platformUrl('/login')}>
-              Login
-            </a>
-            <a className="demo-link" href="/demo">
+            {platformAvailable && (
+              <a className="login-link" href={platformUrl('/login')}>
+                Login
+              </a>
+            )}
+            <a className="demo-link" href={sitePath('/demo')}>
               Request Demo
             </a>
             <Button asChild>
-              <a href="/waitlist">
+              <a href={sitePath('/waitlist')}>
                 Join Waitlist <span aria-hidden="true">↗</span>
               </a>
             </Button>
@@ -78,7 +84,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <footer className="footer-band dark-surface">
         <div className="site-footer container">
           <div className="footer-brand">
-            <a href="/" aria-label="SAQR home">
+            <a href={sitePath('/')} aria-label="SAQR home">
               <Logo />
             </a>
             <p className="footer-tagline">
@@ -109,7 +115,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <p className="eyebrow">QUICK LINKS</p>
             <div className="footer-links">
               {footerLinks.map(([label, href]) => (
-                <a key={href} href={href}>
+                <a key={href} href={sitePath(href)}>
                   {label}
                 </a>
               ))}

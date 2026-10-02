@@ -1,3 +1,4 @@
+import { sitePath } from '../../../lib/site-path';
 import type { Metadata } from 'next';
 import { Button, Card } from '@saqr/ui';
 import { LeadForm } from '../../../components/lead-form';
@@ -130,7 +131,7 @@ export default function SaqrCup() {
               a simulator download.
             </p>
           </div>
-          <a className="text-link" href="/training">
+          <a className="text-link" href={sitePath('/training')}>
             Discover the training approach →
           </a>
         </aside>

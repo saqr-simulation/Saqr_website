@@ -1,3 +1,4 @@
+import { sitePath } from '../../../lib/site-path';
 import { Button, CourseCard, PageHeader } from '@saqr/ui';
 import type { Metadata } from 'next';
 import { demoCourse } from '@saqr/types';
@@ -71,10 +72,10 @@ export default function Training() {
         </div>
         <div className="hero-actions">
           <Button asChild>
-            <a href="/waitlist">Join the Pilot Waitlist ↗</a>
+            <a href={sitePath('/waitlist')}>Join the Pilot Waitlist ↗</a>
           </Button>
           <Button asChild variant="secondary">
-            <a href="/demo">Request a Demo →</a>
+            <a href={sitePath('/demo')}>Request a Demo →</a>
           </Button>
         </div>
       </div>

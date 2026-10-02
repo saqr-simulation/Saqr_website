@@ -1,3 +1,4 @@
+import { sitePath } from '../../../lib/site-path';
 import { Button, Card, PageHeader } from '@saqr/ui';
 import {
   AgricultureMission,
@@ -46,7 +47,9 @@ export default function Agriculture() {
             field operations, flight licenses or spraying services.
           </p>
           <Button asChild>
-            <a href="/waitlist">Join the agricultural training waitlist ↗</a>
+            <a href={sitePath('/waitlist')}>
+              Join the agricultural training waitlist ↗
+            </a>
           </Button>
         </div>
       </AgricultureMission>
@@ -159,7 +162,9 @@ export default function Agriculture() {
           capacity depend on equipment and training arrangements.
         </p>
         <Button asChild>
-          <a href="/waitlist">Join the agricultural missions waitlist ↗</a>
+          <a href={sitePath('/waitlist')}>
+            Join the agricultural missions waitlist ↗
+          </a>
         </Button>
       </section>
     </div>

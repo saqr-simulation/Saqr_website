@@ -1,3 +1,4 @@
+import { sitePath } from '../../../lib/site-path';
 import { Button, Card, PageHeader } from '@saqr/ui';
 export default function Contact() {
   const email = process.env.CONTACT_EMAIL;
@@ -44,13 +45,13 @@ export default function Contact() {
             purposeful practice.
           </p>
           <div className="contact-paths">
-            <a className="text-link" href="/demo">
+            <a className="text-link" href={sitePath('/demo')}>
               Institutional demo request →
             </a>
-            <a className="text-link" href="/waitlist">
+            <a className="text-link" href={sitePath('/waitlist')}>
               Pilot early access →
             </a>
-            <a className="text-link" href="/saqr-cup">
+            <a className="text-link" href={sitePath('/saqr-cup')}>
               SAQR Cup interest →
             </a>
           </div>
@@ -72,7 +73,7 @@ export default function Contact() {
               as ENA, IAV and UM6P, and agricultural training programs exploring
               simulator practice in their computer labs.
             </p>
-            <a href="/demo" className="text-link">
+            <a href={sitePath('/demo')} className="text-link">
               Discuss institutional training →
             </a>
           </Card>
@@ -88,7 +89,7 @@ export default function Contact() {
               href={
                 email
                   ? `mailto:${email}?subject=Commercial%20partnership%20inquiry`
-                  : '/demo'
+                  : sitePath('/demo')
               }
               className="text-link"
             >
@@ -103,7 +104,7 @@ export default function Contact() {
               simulator access, computer compatibility, controller setups and
               SAQR Cup participation.
             </p>
-            <a href="/waitlist" className="text-link">
+            <a href={sitePath('/waitlist')} className="text-link">
               Join the pilot community →
             </a>
           </Card>

@@ -1,5 +1,7 @@
 'use client';
 
+import { sitePath } from '../lib/site-path';
+
 import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 
@@ -244,7 +246,16 @@ export function LeadForm({ kind }: { kind: Kind }) {
     if (!signupToken.current) signupToken.current = crypto.randomUUID();
     const referral = new URLSearchParams(window.location.search).get('ref');
     try {
-      const response = await fetch('/api/website-leads', {
+      const endpoint =
+        process.env.NEXT_PUBLIC_WEBSITE_LEADS_URL ||
+        (process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true'
+          ? ''
+          : sitePath('/api/website-leads'));
+      if (!endpoint)
+        throw new Error(
+          'Online registration is not available yet. Please use the Contact page to reach SAQR.',
+        );
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -274,7 +285,7 @@ export function LeadForm({ kind }: { kind: Kind }) {
         );
       setSaved(result);
       if (kind === 'waitlist') {
-        const url = new URL('/waitlist', window.location.origin);
+        const url = new URL(sitePath('/waitlist/'), window.location.origin);
         if (result.referralCode)
           url.searchParams.set('ref', result.referralCode);
         setShareUrl(url.toString());
@@ -366,7 +377,7 @@ export function LeadForm({ kind }: { kind: Kind }) {
           </>
         )}
         {error && <p role="status">{error}</p>}
-        <a className="text-link" href="/training">
+        <a className="text-link" href={sitePath('/training')}>
           Explore the training approach →
         </a>
       </section>
@@ -566,7 +577,7 @@ export function LeadForm({ kind }: { kind: Kind }) {
             ? 'A request does not reserve a time slot. We’ll arrange a session once availability is confirmed.'
             : 'Joining the waitlist does not guarantee a release date, competition entry or certification.'}{' '}
         You can request removal through our{' '}
-        <a href="/contact" className="text-link">
+        <a href={sitePath('/contact')} className="text-link">
           contact page
         </a>
         .

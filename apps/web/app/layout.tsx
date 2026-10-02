@@ -1,7 +1,8 @@
+import { sitePath } from '../lib/site-path';
 import './globals.css';
 import type { Metadata } from 'next';
 export const metadata: Metadata = {
-  icons: { icon: '/saqr-mark.svg' },
+  icons: { icon: sitePath('/saqr-mark.svg') },
   title: {
     default: 'SAQR | Professional drone training',
     template: '%s | SAQR',

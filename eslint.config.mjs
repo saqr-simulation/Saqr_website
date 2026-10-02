@@ -6,6 +6,8 @@ export default ts.config(
       '**/node_modules/**',
       '**/.next/**',
       '**/dist/**',
+      '**/out/**',
+      '**/.pages-web-*/**',
       '**/next-env.d.ts',
     ],
   },

@@ -1,3 +1,4 @@
+import { sitePath } from '../../lib/site-path';
 import { Badge, Button, Card, Progress } from '@saqr/ui';
 import {
   AgricultureMission,
@@ -44,12 +45,12 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <Button asChild>
-                <a href="/waitlist">
+                <a href={sitePath('/waitlist')}>
                   Join the Pilot Waitlist <span aria-hidden="true">↗</span>
                 </a>
               </Button>
               <Button asChild variant="secondary">
-                <a href="/demo">
+                <a href={sitePath('/demo')}>
                   Request Institutional Demo <span aria-hidden="true">→</span>
                 </a>
               </Button>
@@ -167,7 +168,7 @@ export default function Home() {
                 'Spraying concepts',
               ]}
             />
-            <a href="/agriculture" className="text-link">
+            <a href={sitePath('/agriculture')} className="text-link">
               Explore agriculture training ↗
             </a>
           </div>
@@ -200,7 +201,7 @@ export default function Home() {
           training and credentials are being developed in phases. SAQR course
           completion certificates will not replace regulatory flight licenses.
         </p>
-        <a className="text-link" href="/training">
+        <a className="text-link" href={sitePath('/training')}>
           Explore the full training approach →
         </a>
       </section>
@@ -304,7 +305,7 @@ export default function Home() {
             </p>
           </div>
           <Button asChild>
-            <a href="/saqr-cup">Discover the SAQR Cup ↗</a>
+            <a href={sitePath('/saqr-cup')}>Discover the SAQR Cup ↗</a>
           </Button>
         </div>
       </section>
@@ -323,7 +324,7 @@ export default function Home() {
             capacity and instructor evaluation tools with the team.
           </p>
           <Button asChild variant="secondary">
-            <a href="/demo">Request an Institutional Demo →</a>
+            <a href={sitePath('/demo')}>Request an Institutional Demo →</a>
           </Button>
         </div>
         <div className="institutional-details">
@@ -358,7 +359,7 @@ export default function Home() {
             access community as the simulator takes shape.
           </p>
           <Button asChild>
-            <a href="/waitlist">Join the Pilot Waitlist ↗</a>
+            <a href={sitePath('/waitlist')}>Join the Pilot Waitlist ↗</a>
           </Button>
         </Card>
         <Card>
@@ -369,7 +370,7 @@ export default function Home() {
             objectives and start a conversation about institutional evaluation.
           </p>
           <Button asChild variant="secondary">
-            <a href="/demo">Request an Institutional Demo →</a>
+            <a href={sitePath('/demo')}>Request an Institutional Demo →</a>
           </Button>
         </Card>
       </section>
@@ -386,7 +387,7 @@ export default function Home() {
             explore a new perspective.
           </p>
           <Button asChild>
-            <a href="/waitlist">Start Your Pilot Journey ↗</a>
+            <a href={sitePath('/waitlist')}>Start Your Pilot Journey ↗</a>
           </Button>
         </div>
       </section>

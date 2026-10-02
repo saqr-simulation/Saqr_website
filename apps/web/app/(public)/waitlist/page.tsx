@@ -1,3 +1,4 @@
+import { sitePath } from '../../../lib/site-path';
 import type { Metadata } from 'next';
 import { PageHeader } from '@saqr/ui';
 import { LeadForm } from '../../../components/lead-form';
@@ -50,7 +51,7 @@ export default function Waitlist() {
               </span>
             </li>
           </ul>
-          <a className="text-link" href="/saqr-cup">
+          <a className="text-link" href={sitePath('/saqr-cup')}>
             Explore the SAQR Cup →
           </a>
           <p className="legal-note">
