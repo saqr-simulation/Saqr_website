@@ -8,8 +8,6 @@ export function DroneHero() {
   const host = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const toggleAnimation = useRef<() => void>(() => {});
 
   useEffect(() => {
     const element = host.current!;
@@ -95,9 +93,6 @@ export function DroneHero() {
           yaw = -0.3;
         let pitch = 0;
         let drag: { id: number; x: number; y: number } | null = null;
-        const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let animated = !motion.matches;
-        setPlaying(animated);
         const draw = () => renderer.render(scene, camera);
         const resize = () => {
           renderer.setSize(element.clientWidth, element.clientHeight, false);
@@ -109,7 +104,7 @@ export function DroneHero() {
         resizeObserver.observe(element);
         const tick = (now: number) => {
           frame = 0;
-          if (!visible || document.hidden || stopped || !animated) return;
+          if (!visible || document.hidden || stopped) return;
           if (now - last >= 33) {
             const delta = last ? Math.min((now - last) / 1000, 0.1) : 0;
             last = now;
@@ -135,25 +130,12 @@ export function DroneHero() {
         const onVisibility = () => {
           if (!document.hidden) resume();
         };
-        const setAnimation = (enabled: boolean) => {
-          animated = enabled;
-          setPlaying(enabled);
-          if (enabled) resume();
-          else {
-            cancelAnimationFrame(frame);
-            frame = 0;
-            drone.position.y = 0;
-            draw();
-          }
-        };
-        toggleAnimation.current = () => setAnimation(!animated);
-        const onMotion = () => setAnimation(!motion.matches);
         const rotate = (horizontal: number, vertical: number) => {
           yaw += horizontal;
           pitch = Math.max(-0.6, Math.min(0.6, pitch + vertical));
           drone.rotation.set(pitch, yaw, 0);
           draw();
-          if (animated) resume();
+          resume();
         };
         const down = (event: PointerEvent) => {
           if (!event.isPrimary || event.button !== 0 || drag) return;
@@ -203,13 +185,11 @@ export function DroneHero() {
         element.addEventListener('keydown', keyboard);
         renderer.domElement.addEventListener('webglcontextlost', contextLost);
         document.addEventListener('visibilitychange', onVisibility);
-        motion.addEventListener('change', onMotion);
         drone.rotation.y = yaw;
         resize();
         setReady(true);
         resume();
         teardown = () => {
-          toggleAnimation.current = () => {};
           cancelAnimationFrame(frame);
           resizeObserver.disconnect();
           visibility.disconnect();
@@ -221,7 +201,6 @@ export function DroneHero() {
           element.removeEventListener('keydown', keyboard);
           delete element.dataset.dragging;
           document.removeEventListener('visibilitychange', onVisibility);
-          motion.removeEventListener('change', onMotion);
           renderer.domElement.removeEventListener(
             'webglcontextlost',
             contextLost,
@@ -294,15 +273,6 @@ export function DroneHero() {
               : 'Aircraft concept · drag to rotate'}
           </p>
         </div>
-        {ready && !failed && (
-          <button
-            type="button"
-            className="button"
-            onClick={() => toggleAnimation.current()}
-          >
-            {playing ? 'Pause animation' : 'Play animation'}
-          </button>
-        )}
       </div>
     </div>
   );
